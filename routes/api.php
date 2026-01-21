@@ -16,6 +16,11 @@ use App\Http\Controllers\Api\ProductController;
 |
 */
 
+// Redireciona raiz da API para a documentação Swagger
+Route::get('/', function () {
+    return redirect('/api/documentation');
+});
+
 // Rotas de autenticação (públicas) - com throttle para prevenção de brute force
 Route::prefix('auth')->middleware('throttle:6,1')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);

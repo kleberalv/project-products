@@ -100,82 +100,15 @@ docker exec -it application-server-app php artisan test --filter pode_criar_prod
 
 ## 📡 Documentação da API
 
-### Base URL
+A API REST está **completamente documentada de forma interativa** com Swagger/OpenAPI 3.0. Toda a documentação, exemplos e testes estão disponíveis em:
+
+### 🔗 Acessar Documentação Interativa
+
 ```
-http://localhost:8080/api
-```
-
-### Autenticação
-
-#### Registrar Usuário
-```bash
-POST /api/auth/register
-Content-Type: application/json
-
-{
-  "name": "Seu Nome",
-  "email": "email@example.com",
-  "password": "senha123",
-  "password_confirmation": "senha123"
-}
+http://localhost:8080/api/documentation
 ```
 
-#### Login
-```bash
-POST /api/auth/login
-Content-Type: application/json
-
-{
-  "email": "seu@email.com",
-  "password": "senha123"
-}
-
-# Resposta:
-{
-  "data": {
-    "user": {...},
-    "access_token": "1|TOKEN_AQUI",
-    "token_type": "Bearer"
-  }
-}
-```
-
-#### Usar o Token
-Adicione o header em todas as requisições protegidas:
-```
-Authorization: Bearer SEU_TOKEN_AQUI
-```
-
-### Endpoints de Produtos (Protegidos)
-
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| GET | `/api/produtos` | Listar produtos |
-| POST | `/api/produtos` | Criar produto |
-| GET | `/api/produtos/{id}` | Visualizar produto |
-| PUT/PATCH | `/api/produtos/{id}` | Atualizar produto |
-| DELETE | `/api/produtos/{id}` | Deletar produto |
-| GET | `/api/produtos/deletados` | Listar deletados |
-| POST | `/api/produtos/{id}/restaurar` | Restaurar deletado |
-
-#### Exemplo: Listar Produtos com Filtros
-```bash
-GET /api/produtos?search=notebook&preco_min=100&preco_max=5000&estoque_min=5
-```
-
-#### Exemplo: Criar Produto
-```bash
-POST /api/produtos
-Authorization: Bearer {TOKEN}
-Content-Type: application/json
-
-{
-  "nome": "Notebook Dell",
-  "descricao": "Notebook Dell Inspiron",
-  "preco": 3500.00,
-  "quantidade_estoque": 10
-}
-```
+**Você pode:** testar endpoints, visualizar respostas, enviar requisições autenticadas tudo na interface do navegador!
 
 ---
 

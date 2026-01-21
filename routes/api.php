@@ -39,7 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('produtos')->group(function () {
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);
-        Route::get('/deletados', [ProductController::class, 'trashed']);
+        // rota específica deve vir antes de /{id}
+        Route::get('/trashed', [ProductController::class, 'trashed']);
         Route::get('/{id}', [ProductController::class, 'show']);
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);

@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App;
 
 /**
+ * OpenAPI Global Configuration
+ * 
  * @OA\Info(
  *     version="1.0.0",
  *     title="Gerenciador de Produtos - API",
@@ -29,5 +31,6 @@ namespace App\Http\Controllers\Api;
  */
 class OpenAPI
 {
-    // Este arquivo contém apenas anotações OpenAPI para configuração global da API
+    // Arquivo dedicado para anotações OpenAPI globais
+    // Este arquivo é escaneado pelo L5-Swagger para gerar a documentação
 }

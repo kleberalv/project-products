@@ -14,7 +14,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
+     * Atributos permitidos para atribuição em massa.
      *
      * @var array<int, string>
      */
@@ -25,7 +25,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Atributos ocultos na serialização (JSON/array).
      *
      * @var array<int, string>
      */
@@ -35,7 +35,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Casts automáticos dos atributos.
      *
      * @var array<string, string>
      */
@@ -45,6 +45,9 @@ class User extends Authenticatable
         'deleted_at' => 'datetime',
     ];
 
+    /**
+     * Ajusta a serialização de datas para o fuso configurado.
+     */
     protected function serializeDate(\DateTimeInterface $date): string
     {
         return $date->setTimezone(new \DateTimeZone(config('app.timezone')))->format('Y-m-d H:i:s');

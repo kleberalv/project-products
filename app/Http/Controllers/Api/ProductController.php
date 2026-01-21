@@ -32,7 +32,7 @@ class ProductController extends Controller
      *     summary="Listar produtos",
      *     description="Retorna lista paginada de produtos com suporte a filtros opcionais",
      *     tags={"Produtos"},
-    *     security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -86,7 +86,8 @@ class ProductController extends Controller
      *         response=200,
      *         description="Produtos listados com sucesso",
      *         @OA\JsonContent()
-     *     )
+     *     ),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param IndexRequest $request A requisição contendo parâmetros de filtro e paginação.
@@ -129,7 +130,7 @@ class ProductController extends Controller
      *     summary="Obter produto por ID",
      *     description="Retorna os dados detalhados de um produto específico",
      *     tags={"Produtos"},
-    *     security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="produto",
      *         in="path",
@@ -142,7 +143,8 @@ class ProductController extends Controller
      *         description="Produto encontrado",
      *         @OA\JsonContent()
      *     ),
-     *     @OA\Response(response=404, description="Produto não encontrado")
+     *     @OA\Response(response=404, description="Produto não encontrado"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param int $id O ID do produto a ser exibido.
@@ -191,7 +193,8 @@ class ProductController extends Controller
      *         @OA\JsonContent()
      *     ),
      *     @OA\Response(response=401, description="Não autenticado"),
-     *     @OA\Response(response=422, description="Erro de validação")
+     *     @OA\Response(response=422, description="Erro de validação"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param StoreRequest $request A requisição HTTP contendo os dados do novo produto.
@@ -247,7 +250,8 @@ class ProductController extends Controller
      *     ),
      *     @OA\Response(response=401, description="Não autenticado"),
      *     @OA\Response(response=404, description="Produto não encontrado"),
-     *     @OA\Response(response=422, description="Erro de validação")
+     *     @OA\Response(response=422, description="Erro de validação"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param UpdateRequest $request A requisição contendo dados atualizados do produto.
@@ -273,12 +277,12 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletar produto (soft delete)
+     * Deletar produto
      *
      * @OA\Delete(
      *     path="/produtos/{produto}",
      *     summary="Deletar produto",
-     *     description="Deleta um produto (soft delete - pode ser restaurado)",
+     *     description="Deleta um produto",
      *     tags={"Produtos"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
@@ -296,7 +300,8 @@ class ProductController extends Controller
      *         )
      *     ),
      *     @OA\Response(response=401, description="Não autenticado"),
-     *     @OA\Response(response=404, description="Produto não encontrado")
+     *     @OA\Response(response=404, description="Produto não encontrado"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param int $id O ID do produto a ser deletado.
@@ -327,7 +332,7 @@ class ProductController extends Controller
      *     summary="Listar produtos deletados",
      *     description="Retorna lista paginada de produtos deletados (soft delete)",
      *     tags={"Produtos"},
-    *     security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -346,7 +351,8 @@ class ProductController extends Controller
      *         response=200,
      *         description="Produtos deletados listados com sucesso",
      *         @OA\JsonContent()
-     *     )
+     *     ),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param Request $request A requisição contendo parâmetros de paginação.
@@ -393,7 +399,8 @@ class ProductController extends Controller
      *         @OA\JsonContent()
      *     ),
      *     @OA\Response(response=401, description="Não autenticado"),
-     *     @OA\Response(response=404, description="Produto não encontrado")
+     *     @OA\Response(response=404, description="Produto não encontrado"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param int $id O ID do produto deletado a ser restaurado.

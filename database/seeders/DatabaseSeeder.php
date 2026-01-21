@@ -6,6 +6,9 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Popula dados iniciais (usuario padrao e produtos).
+     */
     public function run(): void
     {
         \App\Models\User::factory()->create([

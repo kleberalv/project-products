@@ -7,7 +7,11 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Mi
 class PreventRequestsDuringMaintenance extends Middleware
 {
     /**
-     * The URIs that should be reachable while maintenance mode is enabled.
+     * Endpoints liberados durante o modo de manutenção.
+     *
+     * Rotas listadas aqui continuarão acessíveis mesmo com `php artisan down`. Útil para
+     * health-checks de load balancer ou webhooks críticos. Mantenha vazio para bloquear
+     * tudo.
      *
      * @var array<int, string>
      */

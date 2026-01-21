@@ -1,6 +1,17 @@
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Configuracao do L5 Swagger
+    |--------------------------------------------------------------------------
+    | - documentations.default.api: metadados (titulo, descricao, versao)
+    | - routes.api: rota da UI (/api/documentation)
+    | - paths.annotations: onde procurar anotations (app/)
+    | - format_to_use_for_docs: formato exibido (json|yaml)
+    | - generate_always: regera docs a cada request em dev (ENV)
+    | - securityDefinitions: esquemas de seguranca definidos nas anotations
+    */
     'default' => 'default',
     'documentations' => [
         'default' => [

@@ -24,8 +24,6 @@ class AuthController extends Controller
      *
      * @param WebLoginRequest $request A requisição contendo email e senha do usuário.
      * @return \Illuminate\Http\RedirectResponse Redireciona para o dashboard se bem-sucedido ou retorna ao login com erros.
-     *
-     * @throws \Exception Se houver erro na criação do token ou atualização de sessão.
      */
     public function login(WebLoginRequest $request)
     {
@@ -33,16 +31,6 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            $user = Auth::user();
-            $newToken = $user->createToken('web-login');
-            $minutes = (int) env('SANCTUM_TOKEN_EXP_MINUTES', 30);
-            if ($tokenModel = $user->tokens()->latest()->first()) {
-                $tokenModel->update([
-                    'last_used_at' => now(),
-                    'expires_at' => now()->addMinutes($minutes),
-                ]);
-            }
 
             return redirect()->intended('/produtos');
         }

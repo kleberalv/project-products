@@ -8,6 +8,9 @@ use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Testes unitarios do ProductService (regras de negocio de produtos).
+ */
 class ProductServiceTest extends TestCase
 {
     use RefreshDatabase;
@@ -21,7 +24,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de criação de produto
+     * Teste de criacao de produto.
      */
     public function test_servico_pode_criar_produto(): void
     {
@@ -39,7 +42,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de validação de nome duplicado
+     * Teste de validacao de nome duplicado.
      */
     public function test_servico_nao_cria_produto_com_nome_duplicado(): void
     {
@@ -57,7 +60,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de obtenção de produto
+     * Teste de obtencao de produto por ID.
      */
     public function test_servico_pode_obter_produto_por_id(): void
     {
@@ -69,7 +72,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de produto não encontrado
+     * Teste de produto nao encontrado.
      */
     public function test_servico_lanca_excecao_quando_produto_nao_encontrado(): void
     {
@@ -80,7 +83,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de atualização de produto
+     * Teste de atualizacao de produto.
      */
     public function test_servico_pode_atualizar_produto(): void
     {
@@ -94,7 +97,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de soft delete de produto
+     * Teste de soft delete de produto.
      */
     public function test_servico_pode_soft_delete_produto(): void
     {
@@ -106,7 +109,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de restauração de produto
+     * Teste de restauracao de produto.
      */
     public function test_servico_pode_restaurar_produto_deletado(): void
     {
@@ -121,7 +124,7 @@ class ProductServiceTest extends TestCase
     
 
     /**
-     * Teste de preço negativo na criação
+     * Teste de preco negativo na criacao.
      */
     public function test_servico_nao_cria_produto_com_preco_negativo(): void
     {
@@ -137,7 +140,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de quantidade negativa na criação
+     * Teste de quantidade negativa na criacao.
      */
     public function test_servico_nao_cria_produto_com_quantidade_negativa(): void
     {
@@ -153,7 +156,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de listagem com paginação
+     * Teste de listagem com paginacao.
      */
     public function test_servico_lista_produtos_com_paginacao(): void
     {
@@ -166,7 +169,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * Teste de listagem de produtos deletados
+     * Teste de listagem de produtos deletados.
      */
     public function test_servico_lista_produtos_deletados(): void
     {

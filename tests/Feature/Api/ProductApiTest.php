@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
+/**
+ * Testes de CRUD e filtros de produtos via API.
+ */
 class ProductApiTest extends TestCase
 {
     use RefreshDatabase;

@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Cria tabela de usuarios com soft delete.
+     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -20,6 +23,9 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Remove a tabela de usuarios.
+     */
     public function down(): void
     {
         Schema::dropIfExists('users');

@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Cria tabela de produtos com soft delete e indices.
+     */
     public function up(): void
     {
         Schema::create('produtos', function (Blueprint $table) {
@@ -23,6 +26,9 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Remove a tabela de produtos.
+     */
     public function down(): void
     {
         Schema::dropIfExists('produtos');

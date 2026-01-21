@@ -122,7 +122,16 @@ class ProductWebController extends Controller
     }
 
     /**
-     * Atualizar produto
+     * Atualiza os dados de um produto existente no sistema.
+     *
+     * Processa a requisição de atualização com validação automática via UpdateRequest,
+     * aplicando as regras de negócio do ProductService (unicidade de nome, validação de preço e estoque).
+     *
+     * @param UpdateRequest $request A requisição HTTP contendo os dados validados para atualização.
+     * @param int $id O ID do produto a ser atualizado.
+     * @return \Illuminate\Http\RedirectResponse Redireciona para a lista de produtos com mensagem de sucesso ou erro.
+     *
+     * @throws \Exception Se o produto não for encontrado, nome duplicado, preço inválido ou estoque negativo.
      */
     public function update(UpdateRequest $request, int $id)
     {
@@ -137,7 +146,16 @@ class ProductWebController extends Controller
     }
 
     /**
-     * Deletar produto
+     * Remove um produto do sistema utilizando soft delete.
+     *
+     * O produto não é permanentemente excluído do banco de dados, apenas marcado como deletado
+     * (soft delete) permitindo recuperação posterior se necessário. A exclusão é registrada
+     * com timestamp em deleted_at.
+     *
+     * @param int $id O ID do produto a ser deletado.
+     * @return \Illuminate\Http\RedirectResponse Redireciona para a lista de produtos com mensagem de sucesso ou erro.
+     *
+     * @throws \Exception Se o produto não for encontrado ou já estiver deletado.
      */
     public function destroy(int $id)
     {

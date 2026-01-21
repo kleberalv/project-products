@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Cria tabela de tokens pessoais (Sanctum) com FK para users e soft delete.
+     */
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
@@ -26,6 +29,9 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Remove a tabela de personal_access_tokens.
+     */
     public function down(): void
     {
         Schema::dropIfExists('personal_access_tokens');

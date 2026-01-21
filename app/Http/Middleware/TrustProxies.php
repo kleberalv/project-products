@@ -8,14 +8,19 @@ use Illuminate\Http\Request;
 class TrustProxies extends Middleware
 {
     /**
-     * The trusted proxies for this application.
+     * Lista de proxies confiáveis para detecção correta do IP/host originais.
+     *
+     * Mantenha null para confiar nos proxies padrão do ambiente ou defina IPs/CIDRs
+     * específicos quando estiver atrás de load balancers conhecidos.
      *
      * @var array<int, string>|string|null
      */
     protected $proxies;
 
     /**
-     * The headers that should be used to detect proxies.
+     * Conjunto de headers usados para identificar informações de proxy.
+     *
+     * Inclui X-Forwarded-* e AWS ELB. Ajuste se o provedor usar cabeçalhos diferentes.
      *
      * @var int
      */

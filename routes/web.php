@@ -6,15 +6,13 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\UserController;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group.
-|
-*/
+ |--------------------------------------------------------------------------
+ | Rotas Web
+ |--------------------------------------------------------------------------
+ | Rotas servidas via Blade/sessao (middleware "web"). Defina aqui páginas
+ | autenticadas e formulários. O RouteServiceProvider carrega este arquivo.
+ |--------------------------------------------------------------------------
+ */
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

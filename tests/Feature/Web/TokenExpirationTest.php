@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+/**
+ * Testes de expiracao e atualizacao de tokens na camada Web.
+ */
 class TokenExpirationTest extends TestCase
 {
     use RefreshDatabase;

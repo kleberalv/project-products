@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+# Entrypoint do container PHP: instala deps, aplica migrations/seeders e sobe php-fpm.
+
 echo "[entrypoint] Iniciando setup da aplicação..."
 cd /var/www
 

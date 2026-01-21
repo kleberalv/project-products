@@ -10,9 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 class CheckTokenExpiration
 {
     /**
-     * Handle an incoming request.
+     * Valida o estado do token Sanctum antes de continuar a requisição.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Rejeita tokens revogados ou expirados com 419 em fluxos API/JSON ou redireciona
+     * para login no fluxo Web. Para tokens válidos, atualiza `last_used_at` para manter
+     * o controle de atividade.
+     *
+     * @param Request $request A requisição atual (usada para decidir resposta JSON ou redirect).
+     * @param Closure $next Próxima etapa do pipeline de middleware.
+     * @return Response Resposta final (pode ser JSON 419 ou redirect se inválido).
      */
     public function handle(Request $request, Closure $next): Response
     {

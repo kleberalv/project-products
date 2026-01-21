@@ -11,9 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 class RedirectIfAuthenticated
 {
     /**
-     * Handle an incoming request.
+     * Impede usuários já autenticados de acessarem rotas de guest (ex.: login/registro).
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Se qualquer guard informado estiver autenticado, redireciona para HOME; caso
+     * contrário, segue o fluxo normal do middleware.
+     *
+     * @param Request $request A requisição atual.
+     * @param Closure $next Próxima etapa do pipeline.
+     * @param string ...$guards Guards a serem checados (opcional).
+     * @return Response Redireciona autenticados ou permite continuidade para guests.
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {

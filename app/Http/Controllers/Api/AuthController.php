@@ -34,7 +34,8 @@ class AuthController extends Controller
      *         description="Login bem-sucedido",
      *         @OA\JsonContent()
      *     ),
-     *     @OA\Response(response=422, description="Credenciais inválidas")
+     *     @OA\Response(response=422, description="Credenciais inválidas"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param LoginRequest $request A requisição contendo email e senha do usuário.
@@ -78,7 +79,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Registrar novo usuário (requer autenticação)
+     * Registrar novo usuário
      *
      * @OA\Post(
      *     path="/auth/register",
@@ -101,7 +102,8 @@ class AuthController extends Controller
      *         description="Usuário registrado com sucesso",
      *         @OA\JsonContent()
      *     ),
-     *     @OA\Response(response=422, description="Erro de validação")
+     *     @OA\Response(response=422, description="Erro de validação"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param RegisterRequest $request A requisição HTTP contendo dados do novo usuário (name, email, password, password_confirmation).
@@ -139,7 +141,8 @@ class AuthController extends Controller
      *         description="Dados do usuário autenticado",
      *         @OA\JsonContent()
      *     ),
-     *     @OA\Response(response=401, description="Não autenticado")
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param Request $request A requisição HTTP com o usuário autenticado.
@@ -168,7 +171,8 @@ class AuthController extends Controller
      *             @OA\Property(property="message", type="string", example="Logout realizado com sucesso")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Não autenticado")
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=500, description="Erro interno do servidor")
      * )
      * 
      * @param Request $request A requisição HTTP com o usuário autenticado.

@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Testes de autenticacao na camada Web (sessao e tokens soft-deleted).
+ */
 class AuthWebTest extends TestCase
 {
     use RefreshDatabase;

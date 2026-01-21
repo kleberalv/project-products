@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Testes de CRUD de produtos via interface Web (Blade/sessao).
+ */
 class ProductWebTest extends TestCase
 {
     use RefreshDatabase;

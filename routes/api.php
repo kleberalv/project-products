@@ -5,6 +5,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 
+/*
+ |--------------------------------------------------------------------------
+ | Rotas API
+ |--------------------------------------------------------------------------
+ | Endpoints REST/JSON protegidos por Sanctum. Inclui login (rate limit)
+ | e rotas autenticadas para usuarios e produtos. O RouteServiceProvider
+ | carrega este arquivo com prefixo /api.
+ |--------------------------------------------------------------------------
+ */
+
 Route::get('/', function () {
     return redirect('/api/documentation');
 });

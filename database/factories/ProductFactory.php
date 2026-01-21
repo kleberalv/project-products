@@ -13,7 +13,7 @@ class ProductFactory extends Factory
     protected $model = Product::class;
 
     /**
-     * Define the model's default state.
+     * Estado padrao do model Product.
      *
      * @return array<string, mixed>
      */
@@ -28,7 +28,7 @@ class ProductFactory extends Factory
     }
 
     /**
-     * Estado para produtos sem estoque
+     * Estado para produtos sem estoque.
      */
     public function semEstoque()
     {
@@ -38,7 +38,7 @@ class ProductFactory extends Factory
     }
 
     /**
-     * Estado para produtos premium
+     * Estado para produtos premium.
      */
     public function premium()
     {

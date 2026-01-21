@@ -11,7 +11,7 @@ use App\Models\PersonalAccessToken;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Registra servicos da aplicacao (bindings e singletons).
      */
     public function register(): void
     {
@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
+     * Inicializa servicos (ajustes globais).
      */
     public function boot(): void
     {

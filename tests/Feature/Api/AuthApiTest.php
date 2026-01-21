@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Testes de autenticacao via API (Sanctum).
+ */
 class AuthApiTest extends TestCase
 {
     use RefreshDatabase;

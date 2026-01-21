@@ -13,13 +13,20 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
     
     protected $dates = ['deleted_at', 'expires_at', 'last_used_at'];
 
+    /**
+     * Relacionamento com o usuário dono do token.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'tokenable_id');
     }
 
     /**
-     * Soft delete o token ao invés de hard delete
+     * Soft delete do token (preserva histórico para auditoria).
+     *
+     * @return bool|null Indica se houve exclusão lógica.
      */
     public function delete()
     {

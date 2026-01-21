@@ -7,6 +7,9 @@ use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
+    /**
+     * Insere catálogo inicial de produtos de autopeças.
+     */
     public function run(): void
     {
         Product::create([

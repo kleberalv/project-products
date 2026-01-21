@@ -340,7 +340,7 @@ class ProductController extends Controller
      * Restaurar produto deletado
      *
      * @OA\Post(
-     *     path="/produtos/{produto}/restore",
+     *     path="/produtos/{produto}/restaurar",
      *     summary="Restaurar produto",
      *     description="Restaura um produto que foi deletado (soft delete)",
      *     tags={"Produtos"},

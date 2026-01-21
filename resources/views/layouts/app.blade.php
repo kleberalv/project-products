@@ -342,6 +342,12 @@
             window.confirmarExclusao = function(id) {
                 showConfirmModal('Tem certeza que deseja deletar este produto?', 'delete-form-' + id);
             };
+
+            document.querySelectorAll('.pagination a').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    showSpinner('Carregando página...');
+                });
+            });
         });
     </script>
     

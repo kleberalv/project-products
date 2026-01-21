@@ -76,13 +76,13 @@
                         <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-warning">
                             <i class="bi bi-pencil"></i> Editar
                         </a>
-                        <button type="button" class="btn btn-danger" onclick="confirmarExclusao()">
+                        <button type="button" class="btn btn-danger" onclick="window.confirmarExclusao({{ $produto->id }})">
                             <i class="bi bi-trash"></i> Deletar
                         </button>
                     </div>
                 </div>
 
-                <form id="delete-form" action="{{ route('produtos.destroy', $produto->id) }}" method="POST" style="display: none;">
+                <form id="delete-form-{{ $produto->id }}" action="{{ route('produtos.destroy', $produto->id) }}" method="POST" style="display: none;">
                     @csrf
                     @method('DELETE')
                 </form>
@@ -91,13 +91,3 @@
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-function confirmarExclusao() {
-    if (confirm('Tem certeza que deseja deletar este produto?')) {
-        document.getElementById('delete-form').submit();
-    }
-}
-</script>
-@endpush

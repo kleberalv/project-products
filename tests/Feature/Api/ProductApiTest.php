@@ -15,7 +15,6 @@ class ProductApiTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        // Autenticar usuário para todos os testes
         Sanctum::actingAs(User::factory()->create());
     }
 
@@ -136,7 +135,7 @@ class ProductApiTest extends TestCase
         $produtoDeletado = Product::factory()->create();
         $produtoDeletado->delete();
 
-        $response = $this->getJson('/api/produtos/deletados');
+        $response = $this->getJson('/api/produtos/trashed');
 
         $response->assertStatus(200)
                  ->assertJsonCount(1, 'data');
@@ -148,7 +147,7 @@ class ProductApiTest extends TestCase
         $produto = Product::factory()->create();
         $produto->delete();
 
-        $response = $this->postJson("/api/produtos/{$produto->id}/restaurar");
+        $response = $this->postJson("/api/produtos/{$produto->id}/restore");
 
         $response->assertStatus(200)
                  ->assertJsonPath('message', 'Produto restaurado com sucesso');

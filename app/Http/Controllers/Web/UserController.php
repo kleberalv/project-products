@@ -45,6 +45,17 @@ class UserController extends Controller
     }
 
     /**
+     * Exibe os detalhes de um usuário específico.
+     *
+     * @param User $usuario O usuário a ser visualizado.
+     * @return \Illuminate\View\View A view de visualização do usuário.
+     */
+    public function show(User $usuario)
+    {
+        return view('usuarios.show', compact('usuario'));
+    }
+
+    /**
      * Armazena um novo usuário no sistema com senha criptografada.
      *
      * @param UserStoreRequest $request A requisição HTTP contendo dados do novo usuário (name, email, password).

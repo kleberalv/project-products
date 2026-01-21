@@ -13,36 +13,39 @@ class AuthApiTest extends TestCase
     /** @test */
     public function pode_registrar_novo_usuario()
     {
-        $response = $this->postJson('/api/auth/register', [
-            'name' => 'Kleber Alves',
-            'email' => 'kleber@email.com',
+        $admin = User::factory()->create();
+        $token = $admin->createToken('test-token')->plainTextToken;
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+                         ->postJson('/api/auth/register', [
+            'name' => 'Novo Usuario',
+            'email' => 'novo@email.com',
             'password' => 'senha123',
             'password_confirmation' => 'senha123',
         ]);
 
         $response->assertStatus(201)
                  ->assertJsonStructure([
-                     'data' => [
-                         'user',
-                         'access_token',
-                         'token_type',
-                     ],
+                     'data',
                      'message',
                  ]);
 
         $this->assertDatabaseHas('users', [
-            'email' => 'kleber@email.com',
+            'email' => 'novo@email.com',
         ]);
     }
 
     /** @test */
     public function nao_pode_registrar_com_email_duplicado()
     {
-        User::factory()->create(['email' => 'kleber@email.com']);
+        $admin = User::factory()->create();
+        $token = $admin->createToken('test-token')->plainTextToken;
+        User::factory()->create(['email' => 'existente@email.com']);
 
-        $response = $this->postJson('/api/auth/register', [
-            'name' => 'Kleber Alves',
-            'email' => 'kleber@email.com',
+        $response = $this->withHeader('Authorization', "Bearer $token")
+                         ->postJson('/api/auth/register', [
+            'name' => 'Teste',
+            'email' => 'existente@email.com',
             'password' => 'senha123',
             'password_confirmation' => 'senha123',
         ]);
@@ -52,15 +55,28 @@ class AuthApiTest extends TestCase
     }
 
     /** @test */
+    public function nao_pode_registrar_sem_autenticacao()
+    {
+        $response = $this->postJson('/api/auth/register', [
+            'name' => 'Teste',
+            'email' => 'teste@email.com',
+            'password' => 'senha123',
+            'password_confirmation' => 'senha123',
+        ]);
+
+        $response->assertStatus(401);
+    }
+
+    /** @test */
     public function pode_fazer_login_com_credenciais_validas()
     {
         $user = User::factory()->create([
-            'email' => 'kleber@email.com',
+            'email' => 'usuario@email.com',
             'password' => bcrypt('senha123'),
         ]);
 
         $response = $this->postJson('/api/auth/login', [
-            'email' => 'kleber@email.com',
+            'email' => 'usuario@email.com',
             'password' => 'senha123',
         ]);
 
@@ -79,12 +95,12 @@ class AuthApiTest extends TestCase
     public function nao_pode_fazer_login_com_credenciais_invalidas()
     {
         User::factory()->create([
-            'email' => 'kleber@email.com',
+            'email' => 'usuario@email.com',
             'password' => bcrypt('senha123'),
         ]);
 
         $response = $this->postJson('/api/auth/login', [
-            'email' => 'kleber@email.com',
+            'email' => 'usuario@email.com',
             'password' => 'wrong-password',
         ]);
 

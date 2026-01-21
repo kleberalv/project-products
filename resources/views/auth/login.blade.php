@@ -60,8 +60,8 @@
                     <div class="alert alert-info mb-0">
                         <small>
                             <strong>Demo:</strong><br>
-                            Email: kleber@email.com<br>
-                            Senha: Senha@12345
+                            Email: firstdecision@email.com<br>
+                            Senha: senha123
                         </small>
                     </div>
                 </div>

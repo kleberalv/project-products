@@ -5,8 +5,8 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'Gerenciador de Produtos - API',
-                'description' => 'API REST para gerenciamento de produtos, autenticação e usuários. Implementada em Laravel 10 com Sanctum.',
+                'title' => 'Gerenciador de Peças de Carro - API',
+                'description' => 'API REST para gerenciamento de peças automotivas, autenticação e usuários. Implementada em Laravel 10 com Sanctum.',
                 'version' => '1.0.0',
             ],
 

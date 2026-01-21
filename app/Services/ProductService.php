@@ -17,6 +17,12 @@ class ProductService
 
     /**
      * Obter produtos com paginação e filtros
+     *
+     * @param int $perPage Número de itens por página
+     * @param array $filters Filtros a serem aplicados (search, preco_min, preco_max, estoque_min, estoque_max)
+     * @param string $sort Campo para ordenação
+     * @param string $direction Direção da ordenação (asc ou desc)
+     * @return LengthAwarePaginator Lista paginada de produtos
      */
     public function listarProdutos(int $perPage = 15, array $filters = [], string $sort = 'id', string $direction = 'desc'): LengthAwarePaginator
     {
@@ -24,9 +30,11 @@ class ProductService
     }
 
     /**
-     * Obter detalhes de um produto
+     * Obter um produto por ID
      *
-     * @throws \Exception
+     * @param int $id ID do produto
+     * @return Product O produto encontrado
+     * @throws \Exception Se o produto não for encontrado
      */
     public function obterProduto(int $id): Product
     {
@@ -42,7 +50,9 @@ class ProductService
     /**
      * Criar um novo produto
      *
-     * @throws \Exception
+     * @param array $dados Dados do produto (nome, descricao, preco, quantidade_estoque)
+     * @return Product O produto criado
+     * @throws \Exception Se já existir produto com mesmo nome, preço inválido ou estoque negativo
      */
     public function criarProduto(array $dados): Product
     {
@@ -62,15 +72,16 @@ class ProductService
     }
 
     /**
-     * Atualizar um produto
+     * Atualizar um produto existente
      *
-     * @throws \Exception
+     * @param int $id ID do produto
+     * @param array $dados Dados a serem atualizados
+     * @return mixed O produto atualizado
+     * @throws \Exception Se já existir outro produto com mesmo nome, preço inválido ou estoque negativo
      */
-    public function atualizarProduto(int $id, array $dados): Product
+    public function atualizarProduto(int $id, array $dados)
     {
-        $product = $this->obterProduto($id);
-
-        if (isset($dados['nome']) && $dados['nome'] !== $product->nome) {
+        if (isset($dados['nome'])) {
             $existingProduct = $this->repository->findByName($dados['nome']);
             if ($existingProduct && $existingProduct->id !== $id) {
                 throw new \Exception('Já existe um produto com este nome', 422);
@@ -89,45 +100,38 @@ class ProductService
     }
 
     /**
-     * Deletar um produto
+     * Deletar um produto (soft delete)
      *
-     * @throws \Exception
+     * @param int $id ID do produto
+     * @return bool True se deletado com sucesso
+     * @throws \Exception Se o produto não for encontrado
      */
     public function deletarProduto(int $id): bool
     {
-        $this->obterProduto($id); // Verifica se existe
+        $this->obterProduto($id);
 
         return $this->repository->delete($id);
     }
 
     /**
-     * Verificar disponibilidade de estoque
-     */
-    public function verificarDisponibilidade(int $id, int $quantidade): bool
-    {
-        $product = $this->obterProduto($id);
-        return $product->podeSerVendido($quantidade);
-    }
-
-    /**
      * Restaurar um produto deletado (soft delete recovery)
      *
-     * @throws \Exception
+     * @param int $id ID do produto deletado
+     * @return Product O produto restaurado
+     * @throws \Exception Se o produto não for encontrado
      */
     public function restaurarProduto(int $id): Product
     {
         $product = Product::onlyTrashed()->find($id);
-
-        if (!$product) {
-            throw new \Exception('Produto deletado não encontrado', 404);
-        }
-
         $product->restore();
         return $product;
     }
 
     /**
      * Listar todos os produtos deletados
+     *
+     * @param int $perPage Número de itens por página
+     * @return LengthAwarePaginator Lista paginada de produtos deletados
      */
     public function listarProdutosDeletados(int $perPage = 15): LengthAwarePaginator
     {
@@ -137,7 +141,9 @@ class ProductService
     /**
      * Obter um produto deletado por ID
      *
-     * @throws \Exception
+     * @param int $id ID do produto deletado
+     * @return Product O produto deletado encontrado
+     * @throws \Exception Se o produto deletado não for encontrado
      */
     public function obterProdutoDeletado(int $id): Product
     {

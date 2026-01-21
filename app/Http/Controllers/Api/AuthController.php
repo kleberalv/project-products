@@ -17,7 +17,7 @@ class AuthController extends Controller
      * Registrar novo usuário
      *
      * @OA\Post(
-     *     path="/auth/register",
+     *     path="/api/register",
      *     summary="Registrar novo usuário",
      *     description="Cria um novo usuário e retorna token de autenticação",
      *     tags={"Autenticação"},
@@ -75,7 +75,7 @@ class AuthController extends Controller
      * Login de usuário
      *
      * @OA\Post(
-     *     path="/auth/login",
+     *     path="/api/login",
      *     summary="Autenticar usuário",
      *     description="Realiza login e retorna token de autenticação Sanctum",
      *     tags={"Autenticação"},
@@ -83,8 +83,8 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email","password"},
-     *             @OA\Property(property="email", type="string", format="email", example="joao@example.com"),
-     *             @OA\Property(property="password", type="string", format="password", example="senha123")
+     *             @OA\Property(property="email", type="string", format="email", example="admin@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="password")
      *         )
      *     ),
      *     @OA\Response(
@@ -131,34 +131,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Obter dados do usuário autenticado
-     *
-     * @OA\Get(
-     *     path="/auth/me",
-     *     summary="Obter usuário autenticado",
-     *     description="Retorna os dados do usuário autenticado. Use o token obtido no login.",
-     *     tags={"Autenticação"},
-     *     security={{"bearerAuth":{}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Dados do usuário autenticado",
-     *         @OA\JsonContent()
-     *     ),
-     *     @OA\Response(response=401, description="Não autenticado")
-     * )
-     */
-    public function me(Request $request): JsonResponse
-    {
-        return response()->json([
-            'data' => $request->user(),
-        ]);
-    }
-
-    /**
      * Logout de usuário
      *
      * @OA\Post(
-     *     path="/auth/logout",
+     *     path="/api/logout",
      *     summary="Fazer logout",
      *     description="Revoga o token de autenticação do usuário logado",
      *     tags={"Autenticação"},
@@ -190,6 +166,30 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Logout realizado com sucesso',
+        ]);
+    }
+
+    /**
+     * Obter dados do usuário autenticado
+     *
+     * @OA\Get(
+     *     path="/api/me",
+     *     summary="Obter usuário autenticado",
+     *     description="Retorna os dados do usuário autenticado",
+     *     tags={"Autenticação"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Dados do usuário",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(response=401, description="Não autenticado")
+     * )
+     */
+    public function me(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $request->user(),
         ]);
     }
 }

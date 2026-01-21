@@ -18,14 +18,14 @@
         }
     ],
     "paths": {
-        "/auth/register": {
+        "/api/register": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Registrar novo usuário",
                 "description": "Cria um novo usuário e retorna token de autenticação",
-                "operationId": "08136088c4862c313b35d6518bab8d3a",
+                "operationId": "8e4e3cb7b46126f4696379d3c7eeb4ad",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -78,14 +78,14 @@
                 }
             }
         },
-        "/auth/login": {
+        "/api/login": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Autenticar usuário",
                 "description": "Realiza login e retorna token de autenticação Sanctum",
-                "operationId": "99d66635c4992aeaa6aa44ff653d0563",
+                "operationId": "222b2625838e3c57e017987f73598fda",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -99,12 +99,12 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "joao@example.com"
+                                        "example": "admin@example.com"
                                     },
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "senha123"
+                                        "example": "password"
                                     }
                                 },
                                 "type": "object"
@@ -127,42 +127,14 @@
                 }
             }
         },
-        "/auth/me": {
-            "get": {
-                "tags": [
-                    "Autenticação"
-                ],
-                "summary": "Obter usuário autenticado",
-                "description": "Retorna os dados do usuário autenticado. Use o token obtido no login.",
-                "operationId": "7edae2cdbaafc10dff8c9c4198b320a2",
-                "responses": {
-                    "200": {
-                        "description": "Dados do usuário autenticado",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autenticado"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/auth/logout": {
+        "/api/logout": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Fazer logout",
                 "description": "Revoga o token de autenticação do usuário logado",
-                "operationId": "6abf3b64a4bc7838d56346f05a5153af",
+                "operationId": "ad65cbbd4e9f201619eae184a5961a98",
                 "responses": {
                     "200": {
                         "description": "Logout realizado com sucesso",
@@ -191,14 +163,42 @@
                 ]
             }
         },
-        "/produtos": {
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Obter usuário autenticado",
+                "description": "Retorna os dados do usuário autenticado",
+                "operationId": "8367feff40ba10e43187792cad3132c1",
+                "responses": {
+                    "200": {
+                        "description": "Dados do usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/produtos": {
             "get": {
                 "tags": [
                     "Produtos"
                 ],
                 "summary": "Listar produtos",
                 "description": "Retorna lista paginada de produtos com suporte a filtros opcionais",
-                "operationId": "27d636214299ea746f574a9deeacdb96",
+                "operationId": "b44f47e2fa424c65d2db9aba57590885",
                 "parameters": [
                     {
                         "name": "page",
@@ -277,12 +277,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
@@ -290,7 +285,7 @@
                 ],
                 "summary": "Criar novo produto",
                 "description": "Cria um novo produto na base de dados",
-                "operationId": "90dbfb312ca2dfa0d162e2b282bc412f",
+                "operationId": "a02ae3401c5ed84c9d6e582ee8e968bb",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -349,14 +344,14 @@
                 ]
             }
         },
-        "/produtos/{produto}": {
+        "/api/produtos/{produto}": {
             "get": {
                 "tags": [
                     "Produtos"
                 ],
                 "summary": "Obter produto por ID",
                 "description": "Retorna os dados detalhados de um produto específico",
-                "operationId": "f252125d58e1bad86bf47fc777c469ad",
+                "operationId": "154beb0cd18d5cf056423c349c73a1d2",
                 "parameters": [
                     {
                         "name": "produto",
@@ -380,12 +375,7 @@
                     "404": {
                         "description": "Produto não encontrado"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             },
             "put": {
                 "tags": [
@@ -393,7 +383,7 @@
                 ],
                 "summary": "Atualizar produto",
                 "description": "Atualiza os dados de um produto existente",
-                "operationId": "0818e903cf71a4456f439d71238a9789",
+                "operationId": "225048246a0ca0c827fc8b8b89dab43e",
                 "parameters": [
                     {
                         "name": "produto",
@@ -466,7 +456,7 @@
                 ],
                 "summary": "Deletar produto",
                 "description": "Deleta um produto (soft delete - pode ser restaurado)",
-                "operationId": "5ee05c2717c32b6a25c508f05e6a7f99",
+                "operationId": "ada40905f121246cd27f06dfaa907b27",
                 "parameters": [
                     {
                         "name": "produto",
@@ -508,14 +498,14 @@
                 ]
             }
         },
-        "/produtos/trashed": {
+        "/api/produtos/trashed": {
             "get": {
                 "tags": [
                     "Produtos"
                 ],
                 "summary": "Listar produtos deletados",
                 "description": "Retorna lista paginada de produtos deletados (soft delete)",
-                "operationId": "5a59cc00c0b77d04f0eaab24ce422a13",
+                "operationId": "9b75f6e1fb21fa0ce8acbe3e84ed6a69",
                 "parameters": [
                     {
                         "name": "page",
@@ -547,22 +537,17 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/produtos/{produto}/restore": {
+        "/api/produtos/{produto}/restore": {
             "post": {
                 "tags": [
                     "Produtos"
                 ],
                 "summary": "Restaurar produto",
                 "description": "Restaura um produto que foi deletado (soft delete)",
-                "operationId": "f383530b802957cc82c2c2abc22582df",
+                "operationId": "16c723c97210182a3a4b6b6c361895a3",
                 "parameters": [
                     {
                         "name": "produto",

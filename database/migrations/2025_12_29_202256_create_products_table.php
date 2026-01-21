@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('produtos', function (Blueprint $table) {
@@ -18,18 +15,14 @@ return new class extends Migration
             $table->decimal('preco', 10, 2);
             $table->integer('quantidade_estoque')->default(0);
             $table->timestamps();
-            $table->softDeletes(); // Exclusão lógica
+            $table->softDeletes();
             
-            // Índices para melhor performance
             $table->index('nome');
             $table->index('created_at');
             $table->index('deleted_at');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('produtos');

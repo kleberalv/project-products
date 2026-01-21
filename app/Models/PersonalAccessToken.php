@@ -16,6 +16,8 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
     /**
      * Soft delete o token ao invés de hard delete
      */
-    public function delete()\n    {\n        return parent::delete();
+    public function delete()
+    {
+        return parent::delete();
     }
 }

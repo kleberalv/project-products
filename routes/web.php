@@ -16,11 +16,9 @@ use App\Http\Controllers\Web\UserController;
 |
 */
 
-// Rotas de autenticação (público)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
-// Rotas protegidas por autenticação
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -28,9 +26,7 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('produtos.index');
     });
 
-    // Rotas de produtos (CRUD web)
     Route::resource('produtos', ProductWebController::class);
 
-    // Rotas de usuários (CRUD web)
     Route::resource('usuarios', UserController::class);
 });

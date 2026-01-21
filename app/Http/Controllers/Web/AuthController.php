@@ -27,11 +27,9 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // Gerar token Sanctum para registrar na base de dados
             $user = Auth::user();
             $newToken = $user->createToken('web-login');
             $minutes = (int) env('SANCTUM_TOKEN_EXP_MINUTES', 30);
-            // Atualizar dados do token criado (expiração e último uso)
             if ($tokenModel = $user->tokens()->latest()->first()) {
                 $tokenModel->update([
                     'last_used_at' => now(),
@@ -52,9 +50,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        // Revogar todos os tokens do usuário preservando histórico
         if ($user = Auth::user()) {
-            // Buscar todos os tokens ativos (sem soft delete) e marcar como revogados/deletados
             $user->tokens()->whereNull('deleted_at')->update([
                 'revoked_at' => now(),
                 'deleted_at' => now(),

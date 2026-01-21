@@ -88,7 +88,6 @@ class ProductController extends Controller
     {
         $perPage = $request->input('per_page', 15);
 
-        // Remove filtros vazios e usa os validados
         $validated = $request->validated();
         $filters = array_filter([
             'search' => $validated['search'] ?? null,

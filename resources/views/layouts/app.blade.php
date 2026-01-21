@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Gerenciamento de Produtos')</title>
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     
@@ -24,7 +23,6 @@
         .table-hover tbody tr:hover {
             background-color: rgba(0,0,0,.02);
         }
-        /* Corrigir botões de paginação */
         .pagination {
             margin: 0;
             flex-wrap: wrap;
@@ -36,7 +34,6 @@
         .pagination .page-item {
             margin: 0 2px;
         }
-        /* Responsividade de botões */
         @media (max-width: 768px) {
             .btn-group-sm {
                 display: flex;
@@ -52,7 +49,6 @@
                 font-size: 0.8rem;
             }
         }
-        /* Spinner Global */
         #loading-overlay {
             display: none;
             position: fixed;
@@ -85,7 +81,6 @@
     @stack('styles')
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('produtos.index') }}">
@@ -138,7 +133,6 @@
         </div>
     </nav>
 
-    <!-- Alertas -->
     <div class="container-fluid">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -167,11 +161,9 @@
         @endif
     </div>
 
-    <!-- Conteúdo -->
     <main class="container-fluid">
         @yield('content')
     </main>
-    <!-- Loading Overlay -->
     <div id="loading-overlay">
         <div class="spinner-container">
             <div class="spinner-border text-primary spinner-border-custom" role="status">
@@ -181,7 +173,6 @@
         </div>
     </div>
 
-    <!-- Modal de Confirmação -->
     <div class="modal fade" id="confirmModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -203,21 +194,18 @@
             </div>
         </div>
     </div>
-    <!-- Footer -->
     <footer class="mt-5 py-4 bg-light border-top">
         <div class="container text-center text-muted">
             <small>&copy; {{ date('Y') }} Gerenciamento de Produtos - Laravel {{ app()->version() }}</small>
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
         let pendingFormId = null;
         let confirmModal;
 
-        // Spinner Global para CRUD
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('loading-overlay');
             const loadingMessage = document.getElementById('loading-message');
@@ -227,7 +215,6 @@
                 maximumFractionDigits: 2
             });
 
-            // Máscara de moeda com limite máximo
             document.querySelectorAll('.currency-input').forEach(function(input) {
                 const hiddenField = document.getElementById(input.dataset.target);
                 const max = parseFloat(input.dataset.max || '99999999.99');
@@ -268,32 +255,32 @@
                 });
             });
             
-            // Função para mostrar o spinner com uma mensagem customizada
             function showSpinner(message = 'Carregando...') {
                 loadingMessage.textContent = message;
                 overlay.classList.add('active');
             }
             
-            // Função para exibir modal de confirmação
             function showConfirmModal(message, formId) {
                 pendingFormId = formId;
                 document.getElementById('confirmMessage').textContent = message;
                 confirmModal.show();
             }
             
-            // Botão de confirmação na modal
             document.getElementById('confirmButton').addEventListener('click', function() {
                 confirmModal.hide();
                 if (pendingFormId) {
                     showSpinner('Deletando...');
-                    document.getElementById(pendingFormId).submit();
+                    setTimeout(function() {
+                        const form = document.getElementById(pendingFormId);
+                        if (form) {
+                            form.submit();
+                        }
+                    }, 100);
                 }
             });
             
-            // Capturar submissão de formulários
             document.querySelectorAll('form').forEach(function(form) {
                 form.addEventListener('submit', function(e) {
-                    // Mostrar spinner se não for GET, ou se for GET mas tiver data-show-spinner
                     const isGet = form.method.toLowerCase() === 'get';
                     const showSpinnerForGet = form.getAttribute('data-show-spinner') === 'true';
                     
@@ -303,7 +290,6 @@
                 });
             });
             
-            // Capturar cliques em botões/links com data-action
             document.querySelectorAll('[data-action]').forEach(function(element) {
                 element.addEventListener('click', function(e) {
                     const action = element.getAttribute('data-action');
@@ -311,9 +297,7 @@
                 });
             });
             
-            // Capturar cliques em links de ação (editar, excluir, voltar, etc)
             document.querySelectorAll('a.btn-warning, a.btn-info, a.btn-secondary, a.btn').forEach(function(link) {
-                // Não mostrar spinner em links de navegação padrão (navbar, etc)
                 if (link.classList.contains('nav-link') || link.classList.contains('dropdown-item')) {
                     return;
                 }
@@ -338,9 +322,12 @@
                 });
             });
             
-            // Disponibilizar função global para confirmação
             window.confirmarExclusao = function(id) {
-                showConfirmModal('Tem certeza que deseja deletar este produto?', 'delete-form-' + id);
+                const isUsuario = window.location.pathname.includes('/usuarios');
+                const message = isUsuario ? 
+                    'Tem certeza que deseja deletar este usuário?' : 
+                    'Tem certeza que deseja deletar este produto?';
+                showConfirmModal(message, 'delete-form-' + id);
             };
 
             document.querySelectorAll('.pagination a').forEach(function(link) {

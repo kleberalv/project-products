@@ -18,7 +18,12 @@ class ProductWebController extends Controller
     }
 
     /**
-     * Listar produtos
+     * Exibe a lista paginada de produtos com suporte a filtros e ordenação.
+     *
+     * @param WebIndexProductRequest $request A requisição contendo filtros e parâmetros de paginação.
+     * @return \Illuminate\View\View A view com a lista de produtos.
+     *
+     * @throws \Exception Se houver erro ao recuperar os produtos.
      */
     public function index(WebIndexProductRequest $request)
     {
@@ -49,7 +54,9 @@ class ProductWebController extends Controller
     }
 
     /**
-     * Exibir formulário de criação
+     * Exibe o formulário para criação de um novo produto.
+     *
+     * @return \Illuminate\View\View A view do formulário de criação.
      */
     public function create()
     {
@@ -57,7 +64,12 @@ class ProductWebController extends Controller
     }
 
     /**
-     * Salvar novo produto
+     * Armazena um novo produto no sistema.
+     *
+     * @param StoreRequest $request A requisição HTTP contendo os dados do novo produto.
+     * @return \Illuminate\Http\RedirectResponse Redireciona para a lista de produtos com mensagem de sucesso ou erro.
+     *
+     * @throws \Exception Se houver erro na validação ou criação do produto.
      */
     public function store(StoreRequest $request)
     {
@@ -72,7 +84,12 @@ class ProductWebController extends Controller
     }
 
     /**
-     * Exibir produto específico
+     * Exibe os detalhes completos de um produto específico.
+     *
+     * @param int $id O ID do produto a ser exibido.
+     * @return \Illuminate\View\View A view com os detalhes do produto.
+     *
+     * @throws \Exception Se o produto não for encontrado.
      */
     public function show(int $id)
     {
@@ -86,7 +103,12 @@ class ProductWebController extends Controller
     }
 
     /**
-     * Exibir formulário de edição
+     * Exibe o formulário de edição para um produto específico.
+     *
+     * @param int $id O ID do produto a ser editado.
+     * @return \Illuminate\View\View A view do formulário de edição.
+     *
+     * @throws \Exception Se o produto não for encontrado.
      */
     public function edit(int $id)
     {

@@ -38,6 +38,11 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=422, description="Erro de validação")
      * )
+     * 
+     * @param RegisterRequest $request A requisição HTTP contendo dados do novo usuário (name, email, password, password_confirmation).
+     * @return JsonResponse A resposta JSON com dados do usuário e token de autenticação (código 201).
+     *
+     * @throws \Exception Se houver erro na criação do usuário ou do token.
      */
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -93,6 +98,11 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=422, description="Credenciais inválidas")
      * )
+     * 
+     * @param LoginRequest $request A requisição contendo email e senha do usuário.
+     * @return JsonResponse A resposta JSON com dados do usuário e token de autenticação Sanctum.
+     *
+     * @throws ValidationException Se as credenciais fornecidas forem inválidas.
      */
     public function login(LoginRequest $request): JsonResponse
     {
@@ -145,6 +155,9 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=401, description="Não autenticado")
      * )
+     * 
+     * @param Request $request A requisição HTTP com o usuário autenticado.
+     * @return JsonResponse A resposta JSON com os dados do usuário autenticado.
      */
     public function me(Request $request): JsonResponse
     {
@@ -171,6 +184,11 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=401, description="Não autenticado")
      * )
+     * 
+     * @param Request $request A requisição HTTP com o usuário autenticado.
+     * @return JsonResponse A resposta JSON indicando sucesso do logout.
+     *
+     * @throws \Exception Se houver erro ao revogar o token.
      */
     public function logout(Request $request): JsonResponse
     {

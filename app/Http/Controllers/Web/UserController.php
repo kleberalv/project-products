@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Listar todos os usuários
+     * Exibe a lista paginada de todos os usuários registrados.
+     *
+     * @param Request $request A requisição HTTP contendo parâmetros de busca.
+     * @return \Illuminate\View\View A view com a lista de usuários.
+     *
+     * @throws \Exception Se houver erro ao recuperar os usuários.
      */
     public function index(Request $request)
     {
@@ -30,7 +35,9 @@ class UserController extends Controller
     }
 
     /**
-     * Mostrar formulário de criação
+     * Exibe o formulário para criação de um novo usuário.
+     *
+     * @return \Illuminate\View\View A view do formulário de criação de usuário.
      */
     public function create()
     {
@@ -38,7 +45,12 @@ class UserController extends Controller
     }
 
     /**
-     * Armazenar novo usuário
+     * Armazena um novo usuário no sistema com senha criptografada.
+     *
+     * @param UserStoreRequest $request A requisição HTTP contendo dados do novo usuário (name, email, password).
+     * @return \Illuminate\Http\RedirectResponse Redireciona para a lista de usuários com mensagem de sucesso.
+     *
+     * @throws \Exception Se houver erro na validação ou criação do usuário.
      */
     public function store(UserStoreRequest $request)
     {
@@ -54,7 +66,10 @@ class UserController extends Controller
     }
 
     /**
-     * Mostrar formulário de edição
+     * Exibe o formulário de edição para um usuário específico.
+     *
+     * @param User $usuario O usuário a ser editado.
+     * @return \Illuminate\View\View A view do formulário de edição.
      */
     public function edit(User $usuario)
     {
@@ -62,7 +77,13 @@ class UserController extends Controller
     }
 
     /**
-     * Atualizar usuário
+     * Atualiza os dados de um usuário existente.
+     *
+     * @param UserUpdateRequest $request A requisição HTTP contendo dados atualizados (name, email, password opcional).
+     * @param User $usuario O usuário a ser atualizado.
+     * @return \Illuminate\Http\RedirectResponse Redireciona para a lista de usuários com mensagem de sucesso.
+     *
+     * @throws \Exception Se houver erro na validação ou atualização do usuário.
      */
     public function update(UserUpdateRequest $request, User $usuario)
     {
@@ -81,7 +102,12 @@ class UserController extends Controller
     }
 
     /**
-     * Deletar usuário
+     * Deleta um usuário do sistema, impedindo exclusão da própria conta.
+     *
+     * @param User $usuario O usuário a ser deletado.
+     * @return \Illuminate\Http\RedirectResponse Redireciona para a lista de usuários com mensagem de sucesso ou erro.
+     *
+     * @throws \Exception Se o usuário tentar deletar sua própria conta.
      */
     public function destroy(User $usuario)
     {

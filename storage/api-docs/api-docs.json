@@ -555,14 +555,14 @@
                 ]
             }
         },
-        "/produtos/{produto}/restore": {
+        "/produtos/{produto}/restaurar": {
             "post": {
                 "tags": [
                     "Produtos"
                 ],
                 "summary": "Restaurar produto",
                 "description": "Restaura um produto que foi deletado (soft delete)",
-                "operationId": "f383530b802957cc82c2c2abc22582df",
+                "operationId": "8c4babda017f5eb7204084f792609dbd",
                 "parameters": [
                     {
                         "name": "produto",

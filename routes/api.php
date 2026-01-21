@@ -21,21 +21,17 @@ Route::get('/', function () {
     return redirect('/api/documentation');
 });
 
-// Rotas de autenticação (públicas) - com throttle para prevenção de brute force
 Route::prefix('auth')->middleware('throttle:6,1')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-// Rotas protegidas por autenticação
 Route::middleware('auth:sanctum')->group(function () {
-    // Auth
     Route::prefix('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/me', [AuthController::class, 'me']);
     });
 
-    // Produtos
     Route::prefix('produtos')->group(function () {
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);

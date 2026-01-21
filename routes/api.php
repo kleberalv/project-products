@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\ProductController;
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
+| be assigned to the "api" middleware group.
 |
 */
 
@@ -35,12 +35,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('produtos')->group(function () {
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);
-        // rota específica deve vir antes de /{id}
         Route::get('/trashed', [ProductController::class, 'trashed']);
         Route::get('/{id}', [ProductController::class, 'show']);
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);
-        Route::post('/{id}/restaurar', [ProductController::class, 'restore']);
+        Route::post('/{id}/restore', [ProductController::class, 'restore']);
     });
 });
 

@@ -11,7 +11,12 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
 {
     use HasFactory, SoftDeletes;
     
-    protected $dates = ['deleted_at', 'expires_at', 'last_used_at', 'revoked_at'];
+    protected $dates = ['deleted_at', 'expires_at', 'last_used_at'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'tokenable_id');
+    }
 
     /**
      * Soft delete o token ao invés de hard delete

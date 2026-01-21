@@ -63,10 +63,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         if ($user = Auth::user()) {
-            $user->tokens()->whereNull('deleted_at')->update([
-                'revoked_at' => now(),
-                'deleted_at' => now(),
-            ]);
+            $user->tokens()->whereNull('deleted_at')->delete();
         }
         
         Auth::logout();

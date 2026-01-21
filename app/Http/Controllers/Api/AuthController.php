@@ -14,68 +14,6 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     /**
-     * Registrar novo usuário
-     *
-     * @OA\Post(
-     *     path="/auth/register",
-     *     summary="Registrar novo usuário",
-     *     description="Cria um novo usuário e retorna token de autenticação",
-     *     tags={"Autenticação"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"name","email","password","password_confirmation"},
-     *             @OA\Property(property="name", type="string", example="João Silva"),
-     *             @OA\Property(property="email", type="string", format="email", example="joao@example.com"),
-     *             @OA\Property(property="password", type="string", format="password", example="senha123"),
-     *             @OA\Property(property="password_confirmation", type="string", format="password", example="senha123")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Usuário registrado com sucesso",
-     *         @OA\JsonContent()
-     *     ),
-     *     @OA\Response(response=422, description="Erro de validação")
-     * )
-     * 
-     * @param RegisterRequest $request A requisição HTTP contendo dados do novo usuário (name, email, password, password_confirmation).
-     * @return JsonResponse A resposta JSON com dados do usuário e token de autenticação (código 201).
-     *
-     * @throws \Exception Se houver erro na criação do usuário ou do token.
-     */
-    public function register(RegisterRequest $request): JsonResponse
-    {
-        $data = $request->validated();
-
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-
-        $newToken = $user->createToken('auth_token');
-        $minutes = (int) env('SANCTUM_TOKEN_EXP_MINUTES', 30);
-        if ($tokenModel = $user->tokens()->latest()->first()) {
-            $tokenModel->update([
-                'last_used_at' => now(),
-                'expires_at' => now()->addMinutes($minutes),
-            ]);
-        }
-
-        $token = $newToken->plainTextToken;
-
-        return response()->json([
-            'data' => [
-                'user' => $user,
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-            ],
-            'message' => 'Usuário registrado com sucesso',
-        ], 201);
-    }
-
-    /**
      * Login de usuário
      *
      * @OA\Post(
@@ -87,7 +25,7 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email","password"},
-     *             @OA\Property(property="email", type="string", format="email", example="joao@example.com"),
+     *             @OA\Property(property="email", type="string", format="email", example="firstdecision@email.com"),
      *             @OA\Property(property="password", type="string", format="password", example="senha123")
      *         )
      *     ),
@@ -116,8 +54,7 @@ class AuthController extends Controller
             ]);
         }
 
-        // Revoga tokens antigos (opcional - descomente se quiser um token por sessão)
-        // $user->tokens()->delete();
+        $user->tokens()->delete();
 
         $newToken = $user->createToken('auth_token');
         $minutes = (int) env('SANCTUM_TOKEN_EXP_MINUTES', 30);
@@ -127,6 +64,7 @@ class AuthController extends Controller
                 'expires_at' => now()->addMinutes($minutes),
             ]);
         }
+
         $token = $newToken->plainTextToken;
 
         return response()->json([
@@ -137,6 +75,54 @@ class AuthController extends Controller
             ],
             'message' => 'Login realizado com sucesso',
         ]);
+    }
+
+    /**
+     * Registrar novo usuário (requer autenticação)
+     *
+     * @OA\Post(
+     *     path="/auth/register",
+     *     summary="Registrar novo usuário",
+     *     description="Cria um novo usuário no sistema (apenas usuários autenticados)",
+     *     tags={"Autenticação"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","email","password","password_confirmation"},
+     *             @OA\Property(property="name", type="string", example="João Silva"),
+     *             @OA\Property(property="email", type="string", format="email", example="joao@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="senha123"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password", example="senha123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Usuário registrado com sucesso",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(response=422, description="Erro de validação")
+     * )
+     * 
+     * @param RegisterRequest $request A requisição HTTP contendo dados do novo usuário (name, email, password, password_confirmation).
+     * @return JsonResponse A resposta JSON com dados do usuário criado (código 201).
+     *
+     * @throws \Exception Se houver erro na criação do usuário.
+     */
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        return response()->json([
+            'data' => $user,
+            'message' => 'Usuário registrado com sucesso',
+        ], 201);
     }
 
     /**
@@ -192,14 +178,10 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
-        $user = $request->user();
-        
         $currentToken = $request->user()->currentAccessToken();
-        if ($currentToken && $tokenModel = $user->tokens()->where('id', $currentToken->id)->first()) {
-            $tokenModel->update([
-                'revoked_at' => now(),
-                'deleted_at' => now(),
-            ]);
+        
+        if ($currentToken) {
+            $currentToken->delete();
         }
 
         return response()->json([

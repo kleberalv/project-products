@@ -99,54 +99,7 @@ docker exec -it application-server-app php artisan test --filter pode_criar_prod
 ---
 
 ## 📡 Documentação da API
-
-A API REST está **completamente documentada de forma interativa** com Swagger/OpenAPI 3.0. Toda a documentação, exemplos e testes estão disponíveis em:
-
-### 🔗 Acessar Documentação Interativa
-
-```
-http://localhost:8080/api/documentation
-```
-
-**Você pode:** testar endpoints, visualizar respostas, enviar requisições autenticadas tudo na interface do navegador!
-
----
-
-## 📚 Documentação Interativa com Swagger
-
-A API conta com documentação interativa completa gerada com **L5-Swagger** (OpenAPI 3.0). Você pode explorar e testar todos os endpoints diretamente pelo navegador.
-
-### Acessar o Swagger UI
-
-```
-http://localhost:8080/api/documentation
-```
-
-### Funcionalidades do Swagger
-
-✅ **Visualizar todos os endpoints** - Organizados por tags (Autenticação, Produtos)  
-✅ **Ver detalhes das requisições e respostas** - Parâmetros, headers, corpos de requisição  
-✅ **Testar endpoints interativamente** - Botão "Try it out" para executar requisições  
-✅ **Autenticação integrada** - Adicione seu token Bearer direto na interface  
-✅ **Modelos de esquema** - Definições de estruturas JSON (Product, User, etc)  
-
-### Exemplo de Uso no Swagger
-
-1. Abra http://localhost:8080/api/documentation
-2. Localize o endpoint **POST /api/login**
-3. Clique em "Try it out"
-4. Preencha com credenciais de teste:
-   ```json
-   {
-     "email": "admin@test.com",
-     "password": "password"
-   }
-   ```
-5. Clique "Execute" e copie o token retornado
-6. Clique no cadeado ⚙️ no topo e cole o token (formato: `Bearer SEU_TOKEN`)
-7. Agora teste os endpoints protegidos!
-
----
+A API REST está documentada via Swagger/OpenAPI 3.0 em http://localhost:8080/api/documentation (documentação interativa completa e testável pelo navegador).
 
 ## Tecnologias Utilizadas
 

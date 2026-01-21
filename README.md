@@ -179,6 +179,42 @@ Content-Type: application/json
 
 ---
 
+## 📚 Documentação Interativa com Swagger
+
+A API conta com documentação interativa completa gerada com **L5-Swagger** (OpenAPI 3.0). Você pode explorar e testar todos os endpoints diretamente pelo navegador.
+
+### Acessar o Swagger UI
+
+```
+http://localhost:8080/api/documentation
+```
+
+### Funcionalidades do Swagger
+
+✅ **Visualizar todos os endpoints** - Organizados por tags (Autenticação, Produtos)  
+✅ **Ver detalhes das requisições e respostas** - Parâmetros, headers, corpos de requisição  
+✅ **Testar endpoints interativamente** - Botão "Try it out" para executar requisições  
+✅ **Autenticação integrada** - Adicione seu token Bearer direto na interface  
+✅ **Modelos de esquema** - Definições de estruturas JSON (Product, User, etc)  
+
+### Exemplo de Uso no Swagger
+
+1. Abra http://localhost:8080/api/documentation
+2. Localize o endpoint **POST /api/login**
+3. Clique em "Try it out"
+4. Preencha com credenciais de teste:
+   ```json
+   {
+     "email": "admin@test.com",
+     "password": "password"
+   }
+   ```
+5. Clique "Execute" e copie o token retornado
+6. Clique no cadeado ⚙️ no topo e cole o token (formato: `Bearer SEU_TOKEN`)
+7. Agora teste os endpoints protegidos!
+
+---
+
 ## Tecnologias Utilizadas
 
 <div align="left">
@@ -197,6 +233,7 @@ Content-Type: application/json
     <img align="center" alt="MariaDB" src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white">
     <img align="center" alt="phpMyAdmin" src="https://img.shields.io/badge/phpMyAdmin-4479A1?style=for-the-badge&logo=phpmyadmin&logoColor=white">
     <img align="center" alt="PHPUnit" src="https://img.shields.io/badge/PHPUnit-366488?style=for-the-badge&logo=php&logoColor=white">
+    <img align="center" alt="Swagger" src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white">
 </div>
 
 ---

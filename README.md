@@ -61,7 +61,7 @@ Siga as etapas abaixo para configurar e executar o projeto:
 
 3. Construa e inicie os contêineres Docker:
    ```bash
-   docker-compose up -d --build
+   docker compose up -d --build
    ```
 
 4. Aguarde a conclusão do setup automático. O Docker executará automaticamente:
@@ -75,6 +75,12 @@ Siga as etapas abaixo para configurar e executar o projeto:
    - **API**: http://localhost:8080/api
    - **phpMyAdmin**: http://localhost:8090
 
+### Credenciais de Acesso
+
+**Usuário padrão para testes:**
+- Email: `firstdecision@email.com`
+- Senha: `senha123`
+
 ### Executar Testes
 
 Para executar os testes automatizados:
@@ -83,7 +89,7 @@ Para executar os testes automatizados:
 docker exec -it application-server-app php artisan test
 ```
 
-**Resultado esperado:** 50 testes passando com mais de 160 assertions em aproximadamente 13 segundos.
+**Resultado esperado:** 49 testes passando com 156 assertions em aproximadamente 45 segundos.
 
 Para rodar um teste específico:
 

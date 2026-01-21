@@ -179,10 +179,10 @@ class ProductController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"nome","preco","quantidade_estoque"},
-     *             @OA\Property(property="nome", type="string", example="Teclado Mecânico"),
+     *             @OA\Property(property="nome", type="string", example="Compressor de Ar Condicionado"),
      *             @OA\Property(property="preco", type="number", format="float", example=450.00),
      *             @OA\Property(property="quantidade_estoque", type="integer", example=50),
-     *             @OA\Property(property="descricao", type="string", nullable=true, example="Teclado RGB com switches mecânicos")
+     *             @OA\Property(property="descricao", type="string", nullable=true, example="Compressor de ar condicionado de alta potência com embreagem magnética")
      *         )
      *     ),
      *     @OA\Response(
@@ -234,10 +234,10 @@ class ProductController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="nome", type="string", example="Teclado Mecânico RGB"),
+     *             @OA\Property(property="nome", type="string", example="Evaporador de Ar Condicionado"),
      *             @OA\Property(property="preco", type="number", format="float", example=500.00),
      *             @OA\Property(property="quantidade_estoque", type="integer", example=45),
-     *             @OA\Property(property="descricao", type="string", nullable=true, example="Teclado RGB com switches mecânicos premium")
+     *             @OA\Property(property="descricao", type="string", nullable=true, example="Evaporador com tubo de cobre e aletas de alumínio para máxima eficiência de resfriamento")
      *         )
      *     ),
      *     @OA\Response(

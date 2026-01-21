@@ -183,4 +183,18 @@ class ProductApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonCount(1, 'data');
     }
+
+    /** @test */
+    public function pode_filtrar_produtos_por_estoque_minimo()
+    {
+        Product::factory()->create(['quantidade_estoque' => 2]);
+        Product::factory()->create(['quantidade_estoque' => 5]);
+        Product::factory()->create(['quantidade_estoque' => 10]);
+
+        $response = $this->getJson('/api/produtos?estoque_min=6');
+
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data')
+                 ->assertJsonPath('data.0.quantidade_estoque', 10);
+    }
 }

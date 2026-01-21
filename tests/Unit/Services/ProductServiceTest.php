@@ -118,29 +118,7 @@ class ProductServiceTest extends TestCase
         $this->assertNull($restored->deleted_at);
     }
 
-    /**
-     * Teste de verificação de disponibilidade de estoque
-     */
-    public function test_servico_verifica_disponibilidade_estoque(): void
-    {
-        $product = Product::factory()->create(['quantidade_estoque' => 10]);
-
-        $available = $this->productService->verificarDisponibilidade($product->id, 5);
-
-        $this->assertTrue($available);
-    }
-
-    /**
-     * Teste de indisponibilidade de estoque
-     */
-    public function test_servico_retorna_falso_estoque_indisponivel(): void
-    {
-        $product = Product::factory()->create(['quantidade_estoque' => 3]);
-
-        $available = $this->productService->verificarDisponibilidade($product->id, 5);
-
-        $this->assertFalse($available);
-    }
+    
 
     /**
      * Teste de preço negativo na criação

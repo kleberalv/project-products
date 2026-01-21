@@ -7,12 +7,8 @@ use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Peças essenciais e comuns
         Product::create([
             'nome' => 'Vela de Ignição Ngk Iridium',
             'descricao' => 'Vela de ignição de alta performance com eletrodo de irídio, maior durabilidade',

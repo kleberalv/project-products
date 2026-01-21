@@ -21,7 +21,7 @@ class CheckTokenExpiration
         if ($user && $user->tokens()->exists()) {
             $currentToken = $user->currentAccessToken();
             
-            if ($currentToken && ($currentToken->deleted_at !== null || $currentToken->revoked_at !== null)) {
+            if ($currentToken && $currentToken->deleted_at !== null) {
                 if ($request->expectsJson() || $request->is('api/*')) {
                     return response()->json(['message' => 'Token revogado ou expirado'], 419);
                 }
@@ -39,10 +39,7 @@ class CheckTokenExpiration
                 ->exists();
 
             if (!$hasValidToken) {
-                $user->tokens()->whereNull('deleted_at')->update([
-                    'revoked_at' => now(),
-                    'deleted_at' => now(),
-                ]);
+                $user->tokens()->whereNull('deleted_at')->delete();
 
                 if ($request->expectsJson() || $request->is('api/*')) {
                     return response()->json(['message' => 'Sessão expirada'], 419);

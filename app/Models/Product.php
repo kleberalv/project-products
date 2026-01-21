@@ -36,6 +36,11 @@ class Product extends Model
         'deleted_at' => 'datetime',
     ];
 
+    protected function serializeDate(\DateTimeInterface $date): string
+    {
+        return $date->setTimezone(new \DateTimeZone(config('app.timezone')))->format('Y-m-d H:i:s');
+    }
+
     /**
      * Validações de regras de negócio
      */

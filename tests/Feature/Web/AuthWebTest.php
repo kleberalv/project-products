@@ -50,7 +50,6 @@ class AuthWebTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // Criar um token
         $user->createToken('test-token');
         $user->tokens()->latest()->first()->update([
             'expires_at' => now()->addHour(),
@@ -58,7 +57,6 @@ class AuthWebTest extends TestCase
 
         $response = $this->post('/logout');
 
-        // Verificar que o token foi soft-deletado (inclui deletados)
         $this->assertNotNull($user->tokens()->withTrashed()->latest()->first()->deleted_at);
         $response->assertRedirect('/login');
     }

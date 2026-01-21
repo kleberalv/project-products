@@ -3,70 +3,74 @@
 @section('title', 'Editar Usuário')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="h3 mb-4">✏️ Editar Usuário</h1>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0"><i class="bi bi-pencil"></i> Editar Usuário #{{ $usuario->id }}</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
 
-            <div class="card">
-                <div class="card-body p-4">
-                    <form method="POST" action="{{ route('usuarios.update', $usuario) }}">
-                        @csrf
-                        @method('PUT')
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nome Completo <span class="text-danger">*</span></label>
+                        <input type="text" 
+                               class="form-control @error('name') is-invalid @enderror" 
+                               id="name" 
+                               name="name" 
+                               value="{{ old('name', $usuario->name) }}" 
+                               required 
+                               autofocus>
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nome Completo</label>
-                            <input
-                                type="text"
-                                class="form-control @error('name') is-invalid @enderror"
-                                id="name"
-                                name="name"
-                                value="{{ old('name', $usuario->name) }}"
-                                required
-                            >
-                            @error('name')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" 
+                               class="form-control @error('email') is-invalid @enderror" 
+                               id="email" 
+                               name="email" 
+                               value="{{ old('email', $usuario->email) }}" 
+                               required>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input
-                                type="email"
-                                class="form-control @error('email') is-invalid @enderror"
-                                id="email"
-                                name="email"
-                                value="{{ old('email', $usuario->email) }}"
-                                required
-                            >
-                            @error('email')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" 
+                               class="form-control @error('password') is-invalid @enderror" 
+                               id="password" 
+                               name="password">
+                        <small class="text-muted">Deixe em branco para não alterar a senha</small>
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="mb-4">
-                            <label for="password" class="form-label">Senha (deixe em branco para não alterar)</label>
-                            <input
-                                type="password"
-                                class="form-control @error('password') is-invalid @enderror"
-                                id="password"
-                                name="password"
-                            >
-                            @error('password')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    <div class="alert alert-info">
+                        <small>
+                            <strong>Criado em:</strong> {{ $usuario->created_at->format('d/m/Y H:i') }} <br>
+                            <strong>Última atualização:</strong> {{ $usuario->updated_at->format('d/m/Y H:i') }}
+                        </small>
+                    </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-save"></i> Salvar Alterações
-                            </button>
-                            <a href="{{ route('usuarios.index') }}" class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-left"></i> Voltar
-                            </a>
-                        </div>
-                    </form>
-                </div>
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-save"></i> Atualizar Usuário
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

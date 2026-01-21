@@ -136,7 +136,7 @@
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <button type="button" class="btn btn-danger"
-                                            onclick="confirmarExclusao({{ $produto->id }})"
+                                            onclick="window.confirmarExclusao({{ $produto->id }})"
                                             title="Deletar">
                                             <i class="bi bi-trash"></i>
                                         </button>

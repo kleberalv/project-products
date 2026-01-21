@@ -31,6 +31,4 @@ namespace App;
  */
 class OpenAPI
 {
-    // Arquivo dedicado para anotações OpenAPI globais
-    // Este arquivo é escaneado pelo L5-Swagger para gerar a documentação
 }

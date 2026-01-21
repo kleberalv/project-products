@@ -29,10 +29,8 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
         });
 
-        // Tratamento de exceções para API (retorna JSON padronizado)
         $this->renderable(function (Throwable $e, $request) {
             if ($request->is('api/*')) {
                 return $this->handleApiException($request, $e);
@@ -45,28 +43,24 @@ class Handler extends ExceptionHandler
      */
     private function handleApiException($request, Throwable $exception)
     {
-        // Model não encontrado
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
                 'message' => 'Recurso não encontrado',
             ], 404);
         }
 
-        // Rota não encontrada
         if ($exception instanceof NotFoundHttpException) {
             return response()->json([
                 'message' => 'Endpoint não encontrado',
             ], 404);
         }
 
-        // Erro de autenticação
         if ($exception instanceof AuthenticationException) {
             return response()->json([
                 'message' => 'Não autenticado',
             ], 401);
         }
 
-        // Validação (já tratada nos FormRequests, mas por segurança)
         if ($exception instanceof ValidationException) {
             return response()->json([
                 'message' => 'Erro de validação',
@@ -74,14 +68,12 @@ class Handler extends ExceptionHandler
             ], 422);
         }
 
-        // HttpException genérica
         if ($exception instanceof HttpException) {
             return response()->json([
                 'message' => $exception->getMessage() ?: 'Erro no servidor',
             ], $exception->getStatusCode());
         }
 
-        // Erro genérico (500)
         $statusCode = method_exists($exception, 'getStatusCode') 
             ? $exception->getStatusCode() 
             : 500;

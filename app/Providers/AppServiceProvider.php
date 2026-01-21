@@ -15,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Registrar bindings de repositório com injeção de dependência
         $this->app->bind(ProductRepositoryInterface::class, EloquentProductRepository::class);
     }
 
@@ -24,7 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Usar o modelo customizado de tokens do Sanctum com SoftDeletes
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
     }
 }

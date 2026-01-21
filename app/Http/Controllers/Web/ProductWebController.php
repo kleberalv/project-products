@@ -26,7 +26,6 @@ class ProductWebController extends Controller
         $sort = $request->input('sort', 'id');
         $direction = $request->input('direction', 'asc');
 
-        // Validar parâmetros de ordenação
         $allowedSortColumns = ['id', 'nome', 'preco', 'quantidade_estoque', 'created_at'];
         if (!in_array($sort, $allowedSortColumns)) {
             $sort = 'id';

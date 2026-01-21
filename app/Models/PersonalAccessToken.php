@@ -16,9 +16,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
     /**
      * Soft delete o token ao invés de hard delete
      */
-    public function delete()
-    {
-        // Chamar o soft delete do trait SoftDeletes
-        return parent::delete();
+    public function delete()\n    {\n        return parent::delete();
     }
 }

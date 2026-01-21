@@ -50,7 +50,6 @@ class AuthController extends Controller
         ]);
 
         $newToken = $user->createToken('auth_token');
-        // Atualiza expiração e último uso
         $minutes = (int) env('SANCTUM_TOKEN_EXP_MINUTES', 30);
         if ($tokenModel = $user->tokens()->latest()->first()) {
             $tokenModel->update([
@@ -175,13 +174,10 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
-        // Revoga o token atual preservando histórico com soft delete
         $user = $request->user();
         
-        // currentAccessToken retorna do Sanctum, precisamos usar nosso modelo
         $currentToken = $request->user()->currentAccessToken();
         if ($currentToken && $tokenModel = $user->tokens()->where('id', $currentToken->id)->first()) {
-            // Marcar como revogado e deletado (soft delete)
             $tokenModel->update([
                 'revoked_at' => now(),
                 'deleted_at' => now(),

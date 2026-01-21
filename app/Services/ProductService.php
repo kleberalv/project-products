@@ -46,17 +46,14 @@ class ProductService
      */
     public function criarProduto(array $dados): Product
     {
-        // Validar nome único
         if ($this->repository->findByName($dados['nome'])) {
             throw new \Exception('Já existe um produto com este nome', 422);
         }
 
-        // Validar preço positivo
         if ($dados['preco'] <= 0) {
             throw new \Exception('Preço deve ser maior que zero', 422);
         }
 
-        // Validar quantidade não negativa
         if ($dados['quantidade_estoque'] < 0) {
             throw new \Exception('Quantidade em estoque não pode ser negativa', 422);
         }
@@ -73,7 +70,6 @@ class ProductService
     {
         $product = $this->obterProduto($id);
 
-        // Se o nome foi alterado, validar unicidade
         if (isset($dados['nome']) && $dados['nome'] !== $product->nome) {
             $existingProduct = $this->repository->findByName($dados['nome']);
             if ($existingProduct && $existingProduct->id !== $id) {
@@ -81,12 +77,10 @@ class ProductService
             }
         }
 
-        // Validar preço positivo
         if (isset($dados['preco']) && $dados['preco'] <= 0) {
             throw new \Exception('Preço deve ser maior que zero', 422);
         }
 
-        // Validar quantidade não negativa
         if (isset($dados['quantidade_estoque']) && $dados['quantidade_estoque'] < 0) {
             throw new \Exception('Quantidade em estoque não pode ser negativa', 422);
         }

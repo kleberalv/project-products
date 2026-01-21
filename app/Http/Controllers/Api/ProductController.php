@@ -88,7 +88,6 @@ class ProductController extends Controller
     {
         $perPage = $request->input('per_page', 15);
 
-        // Remove filtros vazios e usa os validados
         $validated = $request->validated();
         $filters = array_filter([
             'search' => $validated['search'] ?? null,
@@ -340,7 +339,7 @@ class ProductController extends Controller
      * Restaurar produto deletado
      *
      * @OA\Post(
-     *     path="/produtos/{produto}/restore",
+     *     path="/produtos/{produto}/restaurar",
      *     summary="Restaurar produto",
      *     description="Restaura um produto que foi deletado (soft delete)",
      *     tags={"Produtos"},

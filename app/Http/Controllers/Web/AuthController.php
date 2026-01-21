@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     /**
-     * Mostrar formulário de login
+     * Exibe o formulário de login para o usuário.
+     *
+     * @return \Illuminate\View\View A view do formulário de login.
      */
     public function showLoginForm()
     {
@@ -18,7 +20,12 @@ class AuthController extends Controller
     }
 
     /**
-     * Processar login
+     * Processa a autenticação do usuário através de email e senha.
+     *
+     * @param WebLoginRequest $request A requisição contendo email e senha do usuário.
+     * @return \Illuminate\Http\RedirectResponse Redireciona para o dashboard se bem-sucedido ou retorna ao login com erros.
+     *
+     * @throws \Exception Se houver erro na criação do token ou atualização de sessão.
      */
     public function login(WebLoginRequest $request)
     {
@@ -46,7 +53,12 @@ class AuthController extends Controller
     }
 
     /**
-     * Fazer logout
+     * Realiza o logout do usuário, revogando todos os tokens de acesso.
+     *
+     * @param Request $request A requisição HTTP.
+     * @return \Illuminate\Http\RedirectResponse Redireciona para a página de login.
+     *
+     * @throws \Exception Se houver erro na revogação dos tokens.
      */
     public function logout(Request $request)
     {

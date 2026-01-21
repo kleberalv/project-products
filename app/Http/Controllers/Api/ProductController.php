@@ -14,6 +14,11 @@ class ProductController extends Controller
 {
     private ProductService $productService;
 
+    /**
+     * Inicializa o controlador com o serviço de produtos.
+     *
+     * @param ProductService $productService Serviço responsável pela lógica de negócio dos produtos.
+     */
     public function __construct(ProductService $productService)
     {
         $this->productService = $productService;
@@ -83,6 +88,11 @@ class ProductController extends Controller
      *         @OA\JsonContent()
      *     )
      * )
+     * 
+     * @param IndexRequest $request A requisição contendo parâmetros de filtro e paginação.
+     * @return JsonResponse A resposta JSON com lista paginada de produtos.
+     *
+     * @throws \Exception Se houver erro ao recuperar os produtos.
      */
     public function index(IndexRequest $request): JsonResponse
     {
@@ -134,6 +144,11 @@ class ProductController extends Controller
      *     ),
      *     @OA\Response(response=404, description="Produto não encontrado")
      * )
+     * 
+     * @param int $id O ID do produto a ser exibido.
+     * @return JsonResponse A resposta JSON com os detalhes do produto.
+     *
+     * @throws \Exception Se o produto não for encontrado (código 404).
      */
     public function show(int $id): JsonResponse
     {
@@ -178,6 +193,11 @@ class ProductController extends Controller
      *     @OA\Response(response=401, description="Não autenticado"),
      *     @OA\Response(response=422, description="Erro de validação")
      * )
+     * 
+     * @param StoreRequest $request A requisição HTTP contendo os dados do novo produto.
+     * @return JsonResponse A resposta JSON com os dados do produto criado (código 201).
+     *
+     * @throws \Exception Se houver erro na validação ou criação do produto.
      */
     public function store(StoreRequest $request): JsonResponse
     {
@@ -229,6 +249,12 @@ class ProductController extends Controller
      *     @OA\Response(response=404, description="Produto não encontrado"),
      *     @OA\Response(response=422, description="Erro de validação")
      * )
+     * 
+     * @param UpdateRequest $request A requisição contendo dados atualizados do produto.
+     * @param int $id O ID do produto a ser atualizado.
+     * @return JsonResponse A resposta JSON com os dados do produto atualizado.
+     *
+     * @throws \Exception Se o produto não for encontrado ou houver erro na validação.
      */
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
@@ -272,6 +298,11 @@ class ProductController extends Controller
      *     @OA\Response(response=401, description="Não autenticado"),
      *     @OA\Response(response=404, description="Produto não encontrado")
      * )
+     * 
+     * @param int $id O ID do produto a ser deletado.
+     * @return JsonResponse A resposta JSON indicando sucesso da operação.
+     *
+     * @throws \Exception Se o produto não for encontrado.
      */
     public function destroy(int $id): JsonResponse
     {
@@ -317,6 +348,11 @@ class ProductController extends Controller
      *         @OA\JsonContent()
      *     )
      * )
+     * 
+     * @param Request $request A requisição contendo parâmetros de paginação.
+     * @return JsonResponse A resposta JSON com lista paginada de produtos deletados.
+     *
+     * @throws \Exception Se houver erro ao recuperar os produtos deletados.
      */
     public function trashed(Request $request): JsonResponse
     {
@@ -359,6 +395,11 @@ class ProductController extends Controller
      *     @OA\Response(response=401, description="Não autenticado"),
      *     @OA\Response(response=404, description="Produto não encontrado")
      * )
+     * 
+     * @param int $id O ID do produto deletado a ser restaurado.
+     * @return JsonResponse A resposta JSON com os dados do produto restaurado.
+     *
+     * @throws \Exception Se o produto deletado não for encontrado.
      */
     public function restore(int $id): JsonResponse
     {

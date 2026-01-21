@@ -18,13 +18,62 @@
         }
     ],
     "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Autenticar usuário",
+                "description": "Realiza login e retorna token de autenticação Sanctum",
+                "operationId": "99d66635c4992aeaa6aa44ff653d0563",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "firstdecision@email.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "senha123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login bem-sucedido",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Credenciais inválidas"
+                    }
+                }
+            }
+        },
         "/auth/register": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Registrar novo usuário",
-                "description": "Cria um novo usuário e retorna token de autenticação",
+                "description": "Cria um novo usuário no sistema (apenas usuários autenticados)",
                 "operationId": "08136088c4862c313b35d6518bab8d3a",
                 "requestBody": {
                     "required": true,
@@ -75,56 +124,12 @@
                     "422": {
                         "description": "Erro de validação"
                     }
-                }
-            }
-        },
-        "/auth/login": {
-            "post": {
-                "tags": [
-                    "Autenticação"
-                ],
-                "summary": "Autenticar usuário",
-                "description": "Realiza login e retorna token de autenticação Sanctum",
-                "operationId": "99d66635c4992aeaa6aa44ff653d0563",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "joao@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "senha123"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "200": {
-                        "description": "Login bem-sucedido",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Credenciais inválidas"
+                "security": [
+                    {
+                        "bearerAuth": []
                     }
-                }
+                ]
             }
         },
         "/auth/me": {
@@ -304,7 +309,7 @@
                                 "properties": {
                                     "nome": {
                                         "type": "string",
-                                        "example": "Teclado Mecânico"
+                                        "example": "Compressor de Ar Condicionado"
                                     },
                                     "preco": {
                                         "type": "number",
@@ -317,7 +322,7 @@
                                     },
                                     "descricao": {
                                         "type": "string",
-                                        "example": "Teclado RGB com switches mecânicos",
+                                        "example": "Compressor de ar condicionado de alta potência com embreagem magnética",
                                         "nullable": true
                                     }
                                 },
@@ -413,7 +418,7 @@
                                 "properties": {
                                     "nome": {
                                         "type": "string",
-                                        "example": "Teclado Mecânico RGB"
+                                        "example": "Evaporador de Ar Condicionado"
                                     },
                                     "preco": {
                                         "type": "number",
@@ -426,7 +431,7 @@
                                     },
                                     "descricao": {
                                         "type": "string",
-                                        "example": "Teclado RGB com switches mecânicos premium",
+                                        "example": "Evaporador com tubo de cobre e aletas de alumínio para máxima eficiência de resfriamento",
                                         "nullable": true
                                     }
                                 },

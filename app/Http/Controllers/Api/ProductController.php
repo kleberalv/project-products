@@ -21,6 +21,67 @@ class ProductController extends Controller
 
     /**
      * Listar produtos com paginação e filtros
+     *
+     * @OA\Get(
+     *     path="/api/produtos",
+     *     summary="Listar produtos",
+     *     description="Retorna lista paginada de produtos com suporte a filtros opcionais",
+     *     tags={"Produtos"},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Número da página",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Itens por página",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=15)
+     *     ),
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Buscar por nome do produto",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="preco_min",
+     *         in="query",
+     *         description="Preço mínimo",
+     *         required=false,
+     *         @OA\Schema(type="number", format="float")
+     *     ),
+     *     @OA\Parameter(
+     *         name="preco_max",
+     *         in="query",
+     *         description="Preço máximo",
+     *         required=false,
+     *         @OA\Schema(type="number", format="float")
+     *     ),
+     *     @OA\Parameter(
+     *         name="estoque_min",
+     *         in="query",
+     *         description="Estoque mínimo",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="estoque_max",
+     *         in="query",
+     *         description="Estoque máximo",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Produtos listados com sucesso",
+     *         @OA\JsonContent()
+     *     )
+     * )
      */
     public function index(IndexRequest $request): JsonResponse
     {
@@ -52,6 +113,26 @@ class ProductController extends Controller
 
     /**
      * Exibir um produto específico
+     *
+     * @OA\Get(
+     *     path="/api/produtos/{produto}",
+     *     summary="Obter produto por ID",
+     *     description="Retorna os dados detalhados de um produto específico",
+     *     tags={"Produtos"},
+     *     @OA\Parameter(
+     *         name="produto",
+     *         in="path",
+     *         required=true,
+     *         description="ID do produto",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Produto encontrado",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(response=404, description="Produto não encontrado")
+     * )
      */
     public function show(int $id): JsonResponse
     {
@@ -71,6 +152,31 @@ class ProductController extends Controller
 
     /**
      * Criar novo produto
+     *
+     * @OA\Post(
+     *     path="/api/produtos",
+     *     summary="Criar novo produto",
+     *     description="Cria um novo produto na base de dados",
+     *     tags={"Produtos"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nome","preco","quantidade_estoque"},
+     *             @OA\Property(property="nome", type="string", example="Teclado Mecânico"),
+     *             @OA\Property(property="preco", type="number", format="float", example=450.00),
+     *             @OA\Property(property="quantidade_estoque", type="integer", example=50),
+     *             @OA\Property(property="descricao", type="string", nullable=true, example="Teclado RGB com switches mecânicos")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Produto criado com sucesso",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=422, description="Erro de validação")
+     * )
      */
     public function store(StoreRequest $request): JsonResponse
     {
@@ -90,6 +196,38 @@ class ProductController extends Controller
 
     /**
      * Atualizar produto existente
+     *
+     * @OA\Put(
+     *     path="/api/produtos/{produto}",
+     *     summary="Atualizar produto",
+     *     description="Atualiza os dados de um produto existente",
+     *     tags={"Produtos"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="produto",
+     *         in="path",
+     *         required=true,
+     *         description="ID do produto",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nome", type="string", example="Teclado Mecânico RGB"),
+     *             @OA\Property(property="preco", type="number", format="float", example=500.00),
+     *             @OA\Property(property="quantidade_estoque", type="integer", example=45),
+     *             @OA\Property(property="descricao", type="string", nullable=true, example="Teclado RGB com switches mecânicos premium")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Produto atualizado com sucesso",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=404, description="Produto não encontrado"),
+     *     @OA\Response(response=422, description="Erro de validação")
+     * )
      */
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
@@ -109,6 +247,30 @@ class ProductController extends Controller
 
     /**
      * Deletar produto (soft delete)
+     *
+     * @OA\Delete(
+     *     path="/api/produtos/{produto}",
+     *     summary="Deletar produto",
+     *     description="Deleta um produto (soft delete - pode ser restaurado)",
+     *     tags={"Produtos"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="produto",
+     *         in="path",
+     *         required=true,
+     *         description="ID do produto",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Produto deletado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=404, description="Produto não encontrado")
+     * )
      */
     public function destroy(int $id): JsonResponse
     {
@@ -127,6 +289,32 @@ class ProductController extends Controller
 
     /**
      * Listar produtos deletados
+     *
+     * @OA\Get(
+     *     path="/api/produtos/trashed",
+     *     summary="Listar produtos deletados",
+     *     description="Retorna lista paginada de produtos deletados (soft delete)",
+     *     tags={"Produtos"},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Número da página",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Itens por página",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=15)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Produtos deletados listados com sucesso",
+     *         @OA\JsonContent()
+     *     )
+     * )
      */
     public function trashed(Request $request): JsonResponse
     {
@@ -147,6 +335,28 @@ class ProductController extends Controller
 
     /**
      * Restaurar produto deletado
+     *
+     * @OA\Post(
+     *     path="/api/produtos/{produto}/restore",
+     *     summary="Restaurar produto",
+     *     description="Restaura um produto que foi deletado (soft delete)",
+     *     tags={"Produtos"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="produto",
+     *         in="path",
+     *         required=true,
+     *         description="ID do produto deletado",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Produto restaurado com sucesso",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=404, description="Produto não encontrado")
+     * )
      */
     public function restore(int $id): JsonResponse
     {

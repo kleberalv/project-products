@@ -23,10 +23,11 @@ class ProductController extends Controller
      * Listar produtos com paginação e filtros
      *
      * @OA\Get(
-     *     path="/api/produtos",
+     *     path="/produtos",
      *     summary="Listar produtos",
      *     description="Retorna lista paginada de produtos com suporte a filtros opcionais",
      *     tags={"Produtos"},
+    *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -115,10 +116,11 @@ class ProductController extends Controller
      * Exibir um produto específico
      *
      * @OA\Get(
-     *     path="/api/produtos/{produto}",
+     *     path="/produtos/{produto}",
      *     summary="Obter produto por ID",
      *     description="Retorna os dados detalhados de um produto específico",
      *     tags={"Produtos"},
+    *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="produto",
      *         in="path",
@@ -154,7 +156,7 @@ class ProductController extends Controller
      * Criar novo produto
      *
      * @OA\Post(
-     *     path="/api/produtos",
+     *     path="/produtos",
      *     summary="Criar novo produto",
      *     description="Cria um novo produto na base de dados",
      *     tags={"Produtos"},
@@ -198,7 +200,7 @@ class ProductController extends Controller
      * Atualizar produto existente
      *
      * @OA\Put(
-     *     path="/api/produtos/{produto}",
+     *     path="/produtos/{produto}",
      *     summary="Atualizar produto",
      *     description="Atualiza os dados de um produto existente",
      *     tags={"Produtos"},
@@ -249,7 +251,7 @@ class ProductController extends Controller
      * Deletar produto (soft delete)
      *
      * @OA\Delete(
-     *     path="/api/produtos/{produto}",
+     *     path="/produtos/{produto}",
      *     summary="Deletar produto",
      *     description="Deleta um produto (soft delete - pode ser restaurado)",
      *     tags={"Produtos"},
@@ -291,10 +293,11 @@ class ProductController extends Controller
      * Listar produtos deletados
      *
      * @OA\Get(
-     *     path="/api/produtos/trashed",
+     *     path="/produtos/trashed",
      *     summary="Listar produtos deletados",
      *     description="Retorna lista paginada de produtos deletados (soft delete)",
      *     tags={"Produtos"},
+    *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -337,7 +340,7 @@ class ProductController extends Controller
      * Restaurar produto deletado
      *
      * @OA\Post(
-     *     path="/api/produtos/{produto}/restore",
+     *     path="/produtos/{produto}/restore",
      *     summary="Restaurar produto",
      *     description="Restaura um produto que foi deletado (soft delete)",
      *     tags={"Produtos"},

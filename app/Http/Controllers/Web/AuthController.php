@@ -32,6 +32,16 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            $user = Auth::user();
+            $newToken = $user->createToken('web-login');
+            $minutes = (int) env('SANCTUM_TOKEN_EXP_MINUTES', 30);
+            if ($tokenModel = $user->tokens()->latest()->first()) {
+                $tokenModel->update([
+                    'last_used_at' => now(),
+                    'expires_at' => now()->addMinutes($minutes),
+                ]);
+            }
+
             return redirect()->intended('/produtos');
         }
 
@@ -53,7 +63,7 @@ class AuthController extends Controller
         if ($user = Auth::user()) {
             $user->tokens()->whereNull('deleted_at')->delete();
         }
-        
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

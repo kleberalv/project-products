@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
             'nome' => 'sometimes|required|string|max:255|unique:produtos,nome,' . $produtoId,
             'descricao' => 'nullable|string',
             'preco' => 'sometimes|required|numeric|min:0.01|max:999999999',
-            'quantidade_estoque' => 'sometimes|required|integer|min:0',
+            'quantidade_estoque' => 'sometimes|required|numeric|min:0',
         ];
     }
 
@@ -46,7 +46,7 @@ class UpdateRequest extends FormRequest
             'preco.min' => 'O preço deve ser no mínimo 0,01.',
             'preco.max' => 'O preço não pode ultrapassar 999.999.999.',
             'quantidade_estoque.required' => 'A quantidade em estoque é obrigatória.',
-            'quantidade_estoque.integer' => 'A quantidade em estoque deve ser um número inteiro.',
+            'quantidade_estoque.numeric' => 'A quantidade em estoque deve ser um número.',
             'quantidade_estoque.min' => 'A quantidade em estoque deve ser no mínimo 0.',
         ];
     }

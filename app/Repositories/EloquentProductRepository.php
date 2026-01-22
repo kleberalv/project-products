@@ -27,8 +27,10 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
         if (isset($filters['search'])) {
             $search = $filters['search'];
-            $query->where('nome', 'like', "%{$search}%")
+            $query->where(function($q) use ($search) {
+                $q->where('nome', 'like', "%{$search}%")
                   ->orWhere('descricao', 'like', "%{$search}%");
+            });
         }
 
         if (isset($filters['preco_min'])) {

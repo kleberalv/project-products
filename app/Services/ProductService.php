@@ -24,7 +24,7 @@ class ProductService
      * @param string $direction Direção da ordenação (asc ou desc)
      * @return LengthAwarePaginator Lista paginada de produtos
      */
-    public function listarProdutos(int $perPage = 15, array $filters = [], string $sort = 'id', string $direction = 'desc'): LengthAwarePaginator
+    public function listarProdutos(int $perPage = 15, array $filters = [], string $sort = 'id', string $direction = 'asc'): LengthAwarePaginator
     {
         return $this->repository->paginate($perPage, $filters, $sort, $direction);
     }
@@ -81,6 +81,7 @@ class ProductService
      */
     public function atualizarProduto(int $id, array $dados)
     {
+        $this->obterProduto($id);
         if (isset($dados['nome'])) {
             $existingProduct = $this->repository->findByName($dados['nome']);
             if ($existingProduct && $existingProduct->id !== $id) {
@@ -122,7 +123,7 @@ class ProductService
      */
     public function restaurarProduto(int $id): Product
     {
-        $product = Product::onlyTrashed()->find($id);
+        $product = $this->obterProdutoDeletado($id);
         $product->restore();
         return $product;
     }

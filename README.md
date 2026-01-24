@@ -6,6 +6,18 @@ Aplicação web para o gerenciamento de "Produtos" utilizando Laravel e Docker. 
 
 Este projeto é uma infraestrutura containerizada que fornece um ambiente completo para gerenciamento de produtos. A solução integra múltiplos componentes que trabalham juntos para oferecer uma experiência de desenvolvimento e implantação eficiente.
 
+## Principais Telas
+
+![Login Web](docs/login-web.png)
+![Login API](docs/login-api.png)
+![Listar Produtos Web](docs/listar-produtos-web.png)
+![Listar Produtos API](docs/listar-produtos-api.png)
+![Criar Produto Web](docs/criar-produto-web.png)
+![Criar Produto API](docs/criar-produto-api.png)
+![Listar Usuários Web](docs/listar-usuarios-web.png)
+![Swagger Web API](docs/swagger-web-api.png)
+![Testes Unitários e Feature](docs/testes-unitarios-feature.png)
+
 ### Componentes da Arquitetura
 
 1. **app**
@@ -23,26 +35,6 @@ Este projeto é uma infraestrutura containerizada que fornece um ambiente comple
 4. **phpmyadmin**
    
    Interface web para administração do banco de dados MariaDB. Facilita tarefas de gerenciamento, visualização e manipulação de dados de forma intuitiva.
-
-## Licença
-
-Este projeto é licenciado sob a [Licença MIT](LICENSE). Consulte o arquivo [LICENSE](LICENSE) para obter mais detalhes.
-
-### Uso Permitido
-
-Você está autorizado a utilizar este código-fonte apenas para fins de estudo e aprendizado. Isso inclui a análise, modificação e execução do software, desde que seja para fins educacionais.
-
-### Restrições de Uso
-
-Você não tem permissão para usar, reproduzir ou compartilhar este projeto para fins comerciais sem autorização prévia.
-
-### Responsabilidade
-
-O autor deste projeto não assume nenhuma responsabilidade pelo uso indevido ou violação dos termos de licença. Você é o único responsável por garantir o uso adequado e ético deste código-fonte.
-
-### Isenção de Garantia
-
-Este projeto é fornecido "no estado em que se encontra", sem garantias de qualquer tipo. O autor não se responsabiliza por quaisquer danos ou consequências decorrentes do uso deste software.
 
 ## Instruções
 
@@ -89,7 +81,7 @@ Para executar os testes automatizados:
 docker exec -it application-server-app php artisan test
 ```
 
-**Resultado esperado:** 49 testes passando com 156 assertions em aproximadamente 45 segundos.
+**Resultado esperado:** 50 testes passando com 159 assertions em aproximadamente 30 segundos.
 
 Para rodar um teste específico:
 
@@ -106,6 +98,26 @@ docker exec -it application-server-app php artisan test --filter pode_criar_prod
 
 ## 📡 Documentação da API
 A API REST está documentada via Swagger/OpenAPI 3.0 em http://localhost:8080/api/documentation (documentação interativa completa e testável pelo navegador).
+
+## Licença
+
+Este projeto é licenciado sob a [Licença MIT](LICENSE). Consulte o arquivo [LICENSE](LICENSE) para obter mais detalhes.
+
+### Uso Permitido
+
+Você está autorizado a utilizar este código-fonte apenas para fins de estudo e aprendizado. Isso inclui a análise, modificação e execução do software, desde que seja para fins educacionais.
+
+### Restrições de Uso
+
+Você não tem permissão para usar, reproduzir ou compartilhar este projeto para fins comerciais sem autorização prévia.
+
+### Responsabilidade
+
+O autor deste projeto não assume nenhuma responsabilidade pelo uso indevido ou violação dos termos de licença. Você é o único responsável por garantir o uso adequado e ético deste código-fonte.
+
+### Isenção de Garantia
+
+Este projeto é fornecido "no estado em que se encontra", sem garantias de qualquer tipo. O autor não se responsabiliza por quaisquer danos ou consequências decorrentes do uso deste software.
 
 ## Tecnologias Utilizadas
 

@@ -8,14 +8,31 @@ Este projeto é uma infraestrutura containerizada que fornece um ambiente comple
 
 ## Principais Telas
 
+**Login Web**
 ![Login Web](docs/login-web.png)
+
+**Login API**
 ![Login API](docs/login-api.png)
+
+**Listagem de Produtos (Web)**
 ![Listar Produtos Web](docs/listar-produtos-web.png)
+
+**Listagem de Produtos (API)**
 ![Listar Produtos API](docs/listar-produtos-api.png)
+
+**Cadastro de Produto (Web)**
 ![Criar Produto Web](docs/criar-produto-web.png)
+
+**Cadastro de Produto (API)**
 ![Criar Produto API](docs/criar-produto-api.png)
+
+**Listagem de Usuários (Web)**
 ![Listar Usuários Web](docs/listar-usuarios-web.png)
+
+**Documentação Swagger da API**
 ![Swagger Web API](docs/swagger-web-api.png)
+
+**Testes Unitários e de Feature**
 ![Testes Unitários e Feature](docs/testes-unitarios-feature.png)
 
 ### Componentes da Arquitetura
